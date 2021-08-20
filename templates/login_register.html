@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="grey-text text-darken-4 center-align">Log-in / Register</h3>
+
+<div class="row">
+    <!-- log-in column -->
+    <div class="col s12 m6 center-align">
+        <h5>Log-in</h5>
+        <form class="col s12 card-panel grey lighten-5" method="POST" action="{{ url_for('login_register') }}">
+            <!-- https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page -->
+            <input type="hidden" name="action" value="log_in">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username_log_in" name="username" type="text" minlength="3" maxlength="15"
+                        pattern="^[a-zA-Z0-9]{3,15}$" class="validate" required>
+                    <label for="username_log_in">Username</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password_log_in" name="password" type="password" minlength="5" maxlength="15"
+                        pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                    <label for="password_log_in">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light" id="log_in_submit" type="submit"
+                    name="log_in_submit">Log-in
+                    <i class="fas fa-sign-in-alt"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <!-- register column-->
+    <div class="col s12 m6 center-align">
+        <h5>Register</h5>
+        <form class="col s12 card-panel grey lighten-5" method="POST" action="{{ url_for('login_register') }}">
+            <!-- https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page -->
+            <input type="hidden" name="action" value="register">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username_register" name="username" type="text" minlength="3" maxlength="15"
+                        pattern="^[a-zA-Z0-9]{3,15}$" class="validate" required>
+                    <label for="username_register">Username</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password_register" name="password" type="password" minlength="5" maxlength="15"
+                        pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                    <label for="password_register">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <!-- counties are passed by app.py from the counties collection of the db -->
+                <div class="input-field col s12">
+                    <select id="address_county" name="address_county" class="validate" required>
+                        <option value="" disabled selected>Choose your county</option>
+                        {% for county in counties %}
+                        <option value="{{ county.name }}">{{ county.name.capitalize() }}</option>
+                        {% endfor %}
+                    </select>
+                    <label>County</label>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light" id="register_submit" type="submit"
+                    name="register_submit">Register
+                    <i class="fas fa-user-plus"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
