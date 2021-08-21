@@ -18,8 +18,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_restaurants")
 def get_restaurants():
-    restaurants = mongo.db.restaurants.find()
-    reviews = mongo.db.reviews.find()
+    restaurants = mongo.db.restaurants.find({"status": "approved"})
     return render_template("get_restaurants.html", restaurants=restaurants)
 
 
@@ -107,7 +106,6 @@ def add_review():
                                             "name", 1)
     if request.method == "POST":
         name = request.form.get("name")
-        print(name)
         review = {
             "author": session["user"],
             "description": request.form.get("description"),
@@ -116,6 +114,22 @@ def add_review():
         mongo.db.restaurants.update_one({"name": name},
                                         {"$push": {"reviews": review}})
     return render_template("add_review.html", restaurants=restaurants)
+
+
+@app.route("/logout")
+def logout():
+    session.pop("user")
+    return redirect(url_for('login_register'))
+
+
+@app.route("/approve_restaurants", methods=["GET", "POST"])
+def approve_restaurants():
+    restaurants = mongo.db.restaurants.find({"status": "pending"})
+    if request.method == "POST":
+        name = request.form.get("name")
+        print(name)
+        mongo.db.restaurants.update_one({"name": name}, {"$set": {"status": "approved"}})
+    return render_template("approve_restaurants.html", restaurants=restaurants)
 
 
 if __name__ == "__main__":
