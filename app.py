@@ -42,7 +42,9 @@ def add_restaurant():
             "has_gluten_free_options": has_gluten_free_options,
             "pricing_score": request.form.get("pricing_score"),
             "created_by": "mfiorini",
-            "status": "pending"
+            "status": "pending",
+            "avg_star_score": "",
+            "reviews": []
         }
         mongo.db.restaurants.insert_one(restaurant)
     counties = mongo.db.counties.find().sort("name", 1)
@@ -97,6 +99,23 @@ def login_register():
 
     counties = mongo.db.counties.find().sort("name", 1)
     return render_template("login_register.html", counties=counties)
+
+
+@app.route("/add_review", methods=["GET", "POST"])
+def add_review():
+    restaurants = mongo.db.restaurants.find({"status": "approved"}).sort(
+                                            "name", 1)
+    if request.method == "POST":
+        name = request.form.get("name")
+        print(name)
+        review = {
+            "author": session["user"],
+            "description": request.form.get("description"),
+            "star_score": request.form.get("star_score")
+        }
+        mongo.db.restaurants.update_one({"name": name},
+                                        {"$push": {"reviews": review}})
+    return render_template("add_review.html", restaurants=restaurants)
 
 
 if __name__ == "__main__":
