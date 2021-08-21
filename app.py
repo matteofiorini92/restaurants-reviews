@@ -19,7 +19,8 @@ mongo = PyMongo(app)
 @app.route("/get_restaurants")
 def get_restaurants():
     restaurants = mongo.db.restaurants.find()
-    return render_template("restaurants.html", restaurants=restaurants)
+    reviews = mongo.db.reviews.find()
+    return render_template("get_restaurants.html", restaurants=restaurants)
 
 
 @app.route("/add_restaurant", methods=["GET", "POST"])
@@ -28,7 +29,7 @@ def add_restaurant():
         has_vegan_options = True if request.form.get("has_vegan_options") else False
         has_gluten_free_options = True if request.form.get("has_gluten_free_options") else False
         restaurant = {
-            "restaurant_name": request.form.get("restaurant_name"),
+            "name": request.form.get("name"),
             "address_street": request.form.get("address_street"),
             "address_city": request.form.get("address_city"),
             "address_county": request.form.get("address_county"),

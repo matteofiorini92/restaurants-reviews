@@ -2,3 +2,19 @@
     max-height: 56px;
     vertical-align: bottom;
 }
+
+.restaurant-card {
+    height: 300px;
+}
+
+.social-links {
+    float: right;
+}
+
+.close-reveal {
+    float: right;
+}
+
+.float-right {
+    float: right;
+}
