@@ -24,7 +24,7 @@
             <ul class="right hide-on-med-and-down">
                 <li><a href="{{ url_for('get_restaurants') }}">Restaurants</a></li>
                 {% if session.user %}
-                <li><a href="#">My Reviews</a></li>
+                <li><a href="{{ url_for('my_reviews') }}">My Reviews</a></li>
                 <li><a href="{{ url_for('add_review') }}">Add Review</a></li>
                 <li><a href="{{ url_for('add_restaurant') }}">Add Restaurant</a></li>
                     {% if session.user|lower == 'mfiorini'|lower %}
@@ -41,7 +41,7 @@
     <ul class="sidenav" id="mobile-demo">
         <li><a href="{{ url_for('get_restaurants') }}">Restaurants</a></li>
         {% if session.user %}
-        <li><a href="#">My Reviews</a></li>
+        <li><a href="{{ url_for('my_reviews') }}">My Reviews</a></li>
         <li><a href="{{ url_for('add_review') }}">Add Review</a></li>
         <li><a href="{{ url_for('add_restaurant') }}">Add Restaurant</a></li>
             {% if session.user|lower == 'mfiorini'|lower %}

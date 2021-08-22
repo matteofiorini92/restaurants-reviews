@@ -15,6 +15,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+
 @app.route("/")
 @app.route("/get_restaurants")
 def get_restaurants():
@@ -28,8 +29,14 @@ def add_restaurant():
         return render_template("401.html")
     else:
         if request.method == "POST":
-            has_vegan_options = True if request.form.get("has_vegan_options") else False
-            has_gluten_free_options = True if request.form.get("has_gluten_free_options") else False
+            if request.form.get("has_vegan_options"):
+                has_vegan_options = True
+            else:
+                has_vegan_options = False
+            if request.form.get("has_gluten_free_options"):
+                has_gluten_free_options = True
+            else:
+                has_gluten_free_options = False
             restaurant = {
                 "name": request.form.get("name"),
                 "address_street": request.form.get("address_street"),
@@ -68,7 +75,8 @@ def login_register():
 
             register = {
                 "username": request.form.get("username").lower(),
-                "password": generate_password_hash(request.form.get("password")),
+                "password": generate_password_hash(request.
+                                                   form.get("password")),
                 "address_county": request.form.get("address_county").lower()
             }
             mongo.db.users.insert_one(register)
@@ -76,19 +84,23 @@ def login_register():
             # put the new user into 'session' cookie
             session["user"] = request.form.get("username").lower()
             flash("Registration Successful!")
-            return redirect(url_for("get_restaurants", username=session["user"]))
+            return redirect(url_for("get_restaurants",
+                                    username=session["user"]))
 
         elif type == "log_in":
             # check if username exists in db
             existing_user = mongo.db.users.find_one({"username":
-                request.form.get("username").lower()})
+                                                    request.form.
+                                                    get("username").lower()})
 
             if existing_user:
                 # ensure hashed password matches user input
-                if check_password_hash(existing_user["password"], request.form.get("password")):
+                if check_password_hash(existing_user["password"],
+                                       request.form.get("password")):
                     session["user"] = request.form.get("username").lower()
                     flash("Welcome, {}".format(request.form.get("username")))
-                    return redirect(url_for("get_restaurants", username=session["user"]))
+                    return redirect(url_for("get_restaurants",
+                                            username=session["user"]))
                 else:
                     # invalid password match
                     flash("Incorrect Username and/or Password")
@@ -145,7 +157,25 @@ def approve_restaurants():
                                restaurants=restaurants)
 
 
+@app.route("/my_reviews")
+def my_reviews():
+    if not session:
+        return render_template("401.html")
+    else:
+        user = session["user"]
+        restaurants = mongo.db.restaurants.find({"reviews.author": user})
+        reviews = []
+        for restaurant in restaurants:
+            for review in restaurant["reviews"]:
+                if review["author"] == user:
+                    reviews.append({"name": restaurant["name"], "review": review})
+        print(reviews)
+        return render_template("my_reviews.html", reviews=reviews)
+
+
 """ https://www.geeksforgeeks.org/python-404-error-handling-in-flask/ """
+
+
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html")
@@ -153,5 +183,5 @@ def not_found(e):
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
-    port=int(os.environ.get("PORT")),
-    debug=True)
+            port=int(os.environ.get("PORT")),
+            debug=True)

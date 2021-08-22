@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    {% for review in reviews %}
+    <div class="col s12 m6">
+        <form class="card review-card" action="#" method="POST">
+            <input type="hidden" name="review_id" value="{{ review._id }}">
+            <div class="card-content">
+                <div class="card-title grey-text text-darken-4">{{ review.name }} </div>
+                <div class="row">
+                    <div class="col s12 m12">
+                        <h5> {{ review.review.description }}</h5>
+                        <p>{{ review.review.star_score }}</p>
+                        <p>{{ review.review.author }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <!-- placeholder for button -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock%}
