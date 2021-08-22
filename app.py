@@ -121,13 +121,23 @@ def login_register():
     return render_template("login_register.html", counties=counties)
 
 
-@app.route("/add_review", methods=["GET", "POST"])
-def add_review():
+""" https://stackoverflow.com/questions/14032066/can-flask-have-optional-url-parameters """
+
+
+@app.route("/add_review", defaults={'restaurant_id': None}, methods=["GET", "POST"])
+@app.route("/add_review/<restaurant_id>", methods=["GET", "POST"])
+def add_review(restaurant_id):
     if not session:
         return render_template("401.html")
     else:
         restaurants = mongo.db.restaurants.find({"status": "approved"}).sort(
                                                 "name", 1)
+        if restaurant_id:
+            print(restaurant_id)
+            restaurant = mongo.db.restaurants.find_one({"_id": ObjectId(restaurant_id)}, {"name": 1, "_id": 0})["name"]
+            print(restaurant)
+        else:
+            restaurant = ""   
         if request.method == "POST":
             name = request.form.get("name")
             review = {
@@ -139,7 +149,7 @@ def add_review():
             mongo.db.restaurants.update_one({"name": name},
                                             {"$push": {"reviews": review}})
             mongo.db.restaurants.update_one({"name": name}, {"$set": {"avg_star_score": calculate_average_star_score(name)}})
-        return render_template("add_review.html", restaurants=restaurants)
+        return render_template("add_review.html", restaurants=restaurants, chosen_restaurant=restaurant)
 
 
 @app.route("/logout")

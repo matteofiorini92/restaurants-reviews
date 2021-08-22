@@ -56,7 +56,8 @@
                 <a href="{{ url_for('edit_restaurant', restaurant_id=restaurant._id) }}"
                     class="btn light-blue lighten-1">Edit</a>
                 <!-- Modal Trigger -->
-                <a class="waves-effect waves-light btn modal-trigger red" href="#delete_modal_{{ restaurant._id }}">Delete</a>
+                <a class="waves-effect waves-light btn modal-trigger red"
+                    href="#delete_modal_{{ restaurant._id }}">Delete</a>
 
                 <!-- Modal Structure -->
                 <div id="delete_modal_{{ restaurant._id }}" class="modal">
@@ -88,7 +89,9 @@
                 {% endfor %}
                 {% endfor %}
                 {% else %}
-                <p>Leave Review</p>
+                <p>It looks like there are no reviews for this restaurant. Be the first to leave one!</p>
+                <a href="{{ url_for('add_review', restaurant_id=restaurant._id) }}"
+                    class="btn lighten-1">Leave a review</a>
                 {% endif %}
             </div>
 
