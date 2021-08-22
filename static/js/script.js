@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $('.sidenav').sidenav();
   $('select').formSelect();
-
+  $('.modal').modal();
 });
 
 $(".star-rating").click(function () {

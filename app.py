@@ -244,6 +244,12 @@ def edit_restaurant(restaurant_id):
                                 restaurant=restaurant, counties=counties)
 
 
+@app.route("/delete_restaurant/<restaurant_id>", methods=["GET", "POST"])
+def delete_restaurant(restaurant_id):
+    mongo.db.restaurants.delete_one({"_id": ObjectId(restaurant_id)})
+    return redirect(url_for("get_restaurants"))
+
+
 """ https://www.geeksforgeeks.org/python-404-error-handling-in-flask/ """
 
 
