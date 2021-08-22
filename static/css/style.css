@@ -20,11 +20,11 @@
 }
 
 .golden-star {
-  color: chartreuse;
+  color: rgb(255, 215, 0);
 }
 
-.grey-star {
-  color: black;
+.greyed-out {
+  color: rgb(148, 148, 148)
 }
 
 .white-link {

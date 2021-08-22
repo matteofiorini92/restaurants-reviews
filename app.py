@@ -20,8 +20,13 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_restaurants")
 def get_restaurants():
+    if session:
+        user = mongo.db.users.find_one({"username": session["user"]})
+        role = user["role"]
+    else:
+        role = ""
     restaurants = mongo.db.restaurants.find({"status": "approved"})
-    return render_template("get_restaurants.html", restaurants=restaurants)
+    return render_template("get_restaurants.html", restaurants=restaurants, role=role)
 
 
 @app.route("/add_restaurant", methods=["GET", "POST"])
