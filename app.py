@@ -24,30 +24,33 @@ def get_restaurants():
 
 @app.route("/add_restaurant", methods=["GET", "POST"])
 def add_restaurant():
-    if request.method == "POST":
-        has_vegan_options = True if request.form.get("has_vegan_options") else False
-        has_gluten_free_options = True if request.form.get("has_gluten_free_options") else False
-        restaurant = {
-            "name": request.form.get("name"),
-            "address_street": request.form.get("address_street"),
-            "address_city": request.form.get("address_city"),
-            "address_county": request.form.get("address_county"),
-            "tel": request.form.get("tel"),
-            "email_address": request.form.get("email_address"),
-            "website": request.form.get("website"),
-            "fb_page": request.form.get("fb_page"),
-            "ig_page": request.form.get("ig_page"),
-            "has_vegan_options": has_vegan_options,
-            "has_gluten_free_options": has_gluten_free_options,
-            "pricing_score": request.form.get("pricing_score"),
-            "created_by": "mfiorini",
-            "status": "pending",
-            "avg_star_score": "",
-            "reviews": []
-        }
-        mongo.db.restaurants.insert_one(restaurant)
-    counties = mongo.db.counties.find().sort("name", 1)
-    return render_template("add_restaurant.html", counties=counties)
+    if not session:
+        return render_template("401.html")
+    else:
+        if request.method == "POST":
+            has_vegan_options = True if request.form.get("has_vegan_options") else False
+            has_gluten_free_options = True if request.form.get("has_gluten_free_options") else False
+            restaurant = {
+                "name": request.form.get("name"),
+                "address_street": request.form.get("address_street"),
+                "address_city": request.form.get("address_city"),
+                "address_county": request.form.get("address_county"),
+                "tel": request.form.get("tel"),
+                "email_address": request.form.get("email_address"),
+                "website": request.form.get("website"),
+                "fb_page": request.form.get("fb_page"),
+                "ig_page": request.form.get("ig_page"),
+                "has_vegan_options": has_vegan_options,
+                "has_gluten_free_options": has_gluten_free_options,
+                "pricing_score": request.form.get("pricing_score"),
+                "created_by": "mfiorini",
+                "status": "pending",
+                "avg_star_score": "",
+                "reviews": []
+            }
+            mongo.db.restaurants.insert_one(restaurant)
+        counties = mongo.db.counties.find().sort("name", 1)
+        return render_template("add_restaurant.html", counties=counties)
 
 
 @app.route("/login_register", methods=["GET", "POST"])
@@ -102,18 +105,21 @@ def login_register():
 
 @app.route("/add_review", methods=["GET", "POST"])
 def add_review():
-    restaurants = mongo.db.restaurants.find({"status": "approved"}).sort(
-                                            "name", 1)
-    if request.method == "POST":
-        name = request.form.get("name")
-        review = {
-            "author": session["user"],
-            "description": request.form.get("description"),
-            "star_score": request.form.get("star_score")
-        }
-        mongo.db.restaurants.update_one({"name": name},
-                                        {"$push": {"reviews": review}})
-    return render_template("add_review.html", restaurants=restaurants)
+    if not session:
+        return render_template("401.html")
+    else:
+        restaurants = mongo.db.restaurants.find({"status": "approved"}).sort(
+                                                "name", 1)
+        if request.method == "POST":
+            name = request.form.get("name")
+            review = {
+                "author": session["user"],
+                "description": request.form.get("description"),
+                "star_score": request.form.get("star_score")
+            }
+            mongo.db.restaurants.update_one({"name": name},
+                                            {"$push": {"reviews": review}})
+        return render_template("add_review.html", restaurants=restaurants)
 
 
 @app.route("/logout")
@@ -124,12 +130,25 @@ def logout():
 
 @app.route("/approve_restaurants", methods=["GET", "POST"])
 def approve_restaurants():
-    restaurants = mongo.db.restaurants.find({"status": "pending"})
-    if request.method == "POST":
-        name = request.form.get("name")
-        print(name)
-        mongo.db.restaurants.update_one({"name": name}, {"$set": {"status": "approved"}})
-    return render_template("approve_restaurants.html", restaurants=restaurants)
+    if not session:
+        return render_template("401.html")
+    elif session["user"] != "mfiorini":
+        return render_template("403.html")
+    else:
+        restaurants = mongo.db.restaurants.find({"status": "pending"})
+        if request.method == "POST":
+            name = request.form.get("name")
+            print(name)
+            mongo.db.restaurants.update_one({"name": name},
+                                            {"$set": {"status": "approved"}})
+        return render_template("approve_restaurants.html",
+                               restaurants=restaurants)
+
+
+""" https://www.geeksforgeeks.org/python-404-error-handling-in-flask/ """
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html")
 
 
 if __name__ == "__main__":
