@@ -125,6 +125,7 @@ def add_review():
         if request.method == "POST":
             name = request.form.get("name")
             review = {
+                "_id": ObjectId(),
                 "author": session["user"],
                 "description": request.form.get("description"),
                 "star_score": request.form.get("star_score")
@@ -169,8 +170,25 @@ def my_reviews():
             for review in restaurant["reviews"]:
                 if review["author"] == user:
                     reviews.append({"name": restaurant["name"], "review": review})
-        print(reviews)
         return render_template("my_reviews.html", reviews=reviews)
+
+
+@app.route("/edit_review/<review_id>", methods=["GET", "POST"])
+def edit_review(review_id):
+    restaurants = mongo.db.restaurants.find({"reviews._id": ObjectId(review_id)})
+    for restaurant in restaurants:
+        reviews = restaurant["reviews"]
+        for review in reviews:
+            if review["_id"] == ObjectId(review_id):
+                break
+    if request.method == "POST":
+        query = {"name": restaurant["name"], "reviews._id": ObjectId(review_id)}
+        update_description = {"$set": {"reviews.$.description": request.form.get("description")}}
+        update_star_score = {"$set": {"reviews.$.star_score": request.form.get("star_score")}}
+        mongo.db.restaurants.update_one(query, update_description)
+        mongo.db.restaurants.update_one(query, update_star_score)
+        return render_template("my_reviews.html")
+    return render_template("edit_review.html", review=review, restaurant=restaurant)
 
 
 """ https://www.geeksforgeeks.org/python-404-error-handling-in-flask/ """
