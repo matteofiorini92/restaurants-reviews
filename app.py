@@ -1,4 +1,5 @@
 import os
+import math
 from flask import Flask
 if os.path.exists("env.py"):
     import env
@@ -128,10 +129,11 @@ def add_review():
                 "_id": ObjectId(),
                 "author": session["user"],
                 "description": request.form.get("description"),
-                "star_score": request.form.get("star_score")
+                "star_score": int(request.form.get("star_score"))
             }
             mongo.db.restaurants.update_one({"name": name},
                                             {"$push": {"reviews": review}})
+            mongo.db.restaurants.update_one({"name": name}, {"$set": {"avg_star_score": calculate_average_star_score(name)}})
         return render_template("add_review.html", restaurants=restaurants)
 
 
@@ -186,9 +188,10 @@ def edit_review(review_id):
     if request.method == "POST":
         query = {"name": restaurant["name"], "reviews._id": ObjectId(review_id)}
         update_description = {"$set": {"reviews.$.description": request.form.get("description")}}
-        update_star_score = {"$set": {"reviews.$.star_score": request.form.get("star_score")}}
+        update_star_score = {"$set": {"reviews.$.star_score": int(request.form.get("star_score"))}}
         mongo.db.restaurants.update_one(query, update_description)
         mongo.db.restaurants.update_one(query, update_star_score)
+        mongo.db.restaurants.update_one({"name": restaurant["name"]}, {"$set": {"avg_star_score": calculate_average_star_score(name)}})
         return render_template("my_reviews.html")
     return render_template("edit_review.html",
                            review=review, restaurant=restaurant)
@@ -242,6 +245,18 @@ def edit_restaurant(restaurant_id):
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html")
+
+
+def calculate_average_star_score(name):
+    restaurant = mongo.db.restaurants.find_one({"name": name})
+    reviews = restaurant["reviews"]
+    star_scores = []
+    for review in reviews:
+        star_scores.append(int(review["star_score"]))
+    print(star_scores)
+    print(sum(star_scores)/len(star_scores))
+    average = math.floor(sum(star_scores)/len(star_scores))
+    return average
 
 
 if __name__ == "__main__":
