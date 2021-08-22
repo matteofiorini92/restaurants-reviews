@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="grey-text text-darken-4 center-align">Edit a restaurant</h3>
+
+<div class="row card-panel grey lighten-5">
+    <form class="col s12" method="POST" action="{{ url_for('edit_restaurant', restaurant_id=restaurant._id) }}">
+
+        <!-- restaurant name -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="fas fa-utensils prefix deep-orange-text text-accent-4"></i>
+                <input id="name" name="name" type="text" class="validate" value="{{ restaurant.name }}">
+                <label for="name">Restaurant Name</label>
+            </div>
+        </div>
+        <!-- restaurant address street -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="fas fa-store-alt prefix deep-orange-text text-accent-4"></i>
+                <input id="address_street" name="address_street" type="text" class="validate"
+                    value="{{ restaurant.address_street }}">
+                <label for="address_street">Address Street</label>
+            </div>
+        </div>
+        <!-- restaurant address city and county-->
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="address_city" name="address_city" type="text" class="validate"
+                    value="{{ restaurant.address_city }}">
+                <label for="address_city">City</label>
+            </div>
+            <!-- counties are passed by app.py from the counties collection of the db -->
+            <div class="input-field col s6">
+                <select id="address_county" name="address_county" class="validate" required>
+                    <option value="" disabled>Choose County</option>
+                    {% for county in counties %}
+                    {% if county.name|lower == restaurant.address_county|lower %}
+                    <option value="{{ county.name }}" selected>{{ county.name.capitalize() }}</option>
+                    {% else %}
+                    <option value="{{ county.name }}">{{ county.name.capitalize() }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <label>County</label>
+            </div>
+            <!-- restaurant phone and email -->
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="tel" name="tel" type="tel" class="validate" value="{{ restaurant.tel }}">
+                    <label for="tel">Phone Number</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="email_address" name="email_address" type="email" class="validate" value="{{ restaurant.email }}">
+                    <label for="email_address">Email Address</label>
+                </div>
+            </div>
+            <!-- restaurant website, facebook and instangram links -->
+            <div class="row">
+                <div class="input-field col s4">
+                    <i class="fas fa-globe prefix deep-orange-text text-accent-4"></i>
+                    <input id="website" name="website" type="url" class="validate" value="{{ restaurant.website }}">
+                    <label for="website">Website</label>
+                </div>
+                <div class="input-field col s4">
+                    <i class="fab fa-facebook prefix deep-orange-text text-accent-4"></i>
+                    <input id="fb_page" name="fb_page" type="url" class="validate" value="{{ restaurant.fb_page }}">
+                    <label for="fb_page">Facebook</label>
+                </div>
+                <div class="input-field col s4">
+                    <i class="fab fa-instagram prefix deep-orange-text text-accent-4"></i>
+                    <input id="ig_page" name="ig_page" type="url" class="validate" value="{{ restaurant.ig_page }}">
+                    <label for="ig_page">Instagram</label>
+                </div>
+            </div>
+            <!-- has vegan and gluten free options and price score -->
+            <div class="row">
+                <div class="input-field col s4">
+                    <div class="switch">
+                        <label>
+                            {% if restaurant.has_vegan_options %}
+                            <input type="checkbox" id="has_vegan_options" name="has_vegan_options" checked>
+                            {% else %}
+                            <input type="checkbox" id="has_vegan_options" name="has_vegan_options">
+                            {% endif %}
+                            <span class="lever"></span>
+                            Has vegan options?
+                        </label>
+                    </div>
+                </div>
+                <div class="input-field col s4">
+                    <div class="switch">
+                        <label>
+                            {% if restaurant.has_gluten_free_options %}
+                            <input type="checkbox" id="has_gluten_free_options" name="has_gluten_free_options" checked>
+                            {% else %}
+                            <input type="checkbox" id="has_gluten_free_options" name="has_gluten_free_options">
+                            {% endif %}
+                            <span class="lever"></span>
+                            Has gluten-free options?
+                        </label>
+                    </div>
+                </div>
+                <div class="range-field col s4">
+                    <input type="range" id="pricing_score" name="pricing_score" min="1" max="5"
+                        value="{{ restaurant.pricing_score }}" />
+                    <label for="pricing_score">Pricing Score</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 center-align">
+                    <button class="btn waves-effect waves-light red" type="cancel" name="edit_restaurant_cancel">Cancel
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <button class="btn waves-effect waves-light" type="submit" name="edit_restaurant_submit">Edit
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+    </form>
+</div>
+
+{% endblock %}

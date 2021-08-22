@@ -50,7 +50,7 @@ def add_restaurant():
                 "has_vegan_options": has_vegan_options,
                 "has_gluten_free_options": has_gluten_free_options,
                 "pricing_score": request.form.get("pricing_score"),
-                "created_by": "mfiorini",
+                "created_by": session["user"],
                 "status": "pending",
                 "avg_star_score": "",
                 "reviews": []
@@ -145,17 +145,19 @@ def logout():
 def approve_restaurants():
     if not session:
         return render_template("401.html")
-    elif session["user"] != "mfiorini":
-        return render_template("403.html")
     else:
-        restaurants = mongo.db.restaurants.find({"status": "pending"})
-        if request.method == "POST":
-            name = request.form.get("name")
-            print(name)
-            mongo.db.restaurants.update_one({"name": name},
-                                            {"$set": {"status": "approved"}})
-        return render_template("approve_restaurants.html",
-                               restaurants=restaurants)
+        user = mongo.db.users.find_one({"username": session["user"]})
+        if user["role"] != "admin":
+            return render_template("403.html")
+        else:
+            restaurants = mongo.db.restaurants.find({"status": "pending"})
+            if request.method == "POST":
+                name = request.form.get("name")
+                print(name)
+                mongo.db.restaurants.update_one({"name": name},
+                                                {"$set": {"status": "approved"}})
+            return render_template("approve_restaurants.html",
+                                restaurants=restaurants)
 
 
 @app.route("/my_reviews")
@@ -188,7 +190,50 @@ def edit_review(review_id):
         mongo.db.restaurants.update_one(query, update_description)
         mongo.db.restaurants.update_one(query, update_star_score)
         return render_template("my_reviews.html")
-    return render_template("edit_review.html", review=review, restaurant=restaurant)
+    return render_template("edit_review.html",
+                           review=review, restaurant=restaurant)
+
+
+@app.route("/edit_restaurant/<restaurant_id>", methods=["GET", "POST"])
+def edit_restaurant(restaurant_id):
+    if not session:
+        return render_template("401.html")
+    else:
+        user = mongo.db.users.find_one({"username": session["user"]})
+        if user["role"] != "admin":
+            return render_template("403.html")
+        else:
+            restaurant = mongo.db.restaurants.find_one({"_id": ObjectId(restaurant_id)})
+            counties = mongo.db.counties.find().sort("name", 1)
+            if request.method == "POST":
+                if request.form.get("has_vegan_options"):
+                    has_vegan_options = True
+                else:
+                    has_vegan_options = False
+                if request.form.get("has_gluten_free_options"):
+                    has_gluten_free_options = True
+                else:
+                    has_gluten_free_options = False
+                query = {"_id": ObjectId(restaurant_id)}
+                update_restaurant = {"$set": {
+                    "name": request.form.get("name"),
+                    "address_street": request.form.get("address_street"),
+                    "address_city": request.form.get("address_city"),
+                    "address_county": request.form.get("address_county"),
+                    "tel": request.form.get("tel"),
+                    "email_address": request.form.get("email_address"),
+                    "website": request.form.get("website"),
+                    "fb_page": request.form.get("fb_page"),
+                    "ig_page": request.form.get("ig_page"),
+                    "has_vegan_options": has_vegan_options,
+                    "has_gluten_free_options": has_gluten_free_options,
+                    "pricing_score": request.form.get("pricing_score"),
+                    "updated_by": session["user"]
+                }}
+                mongo.db.restaurants.update_one(query, update_restaurant)
+                return redirect(url_for("get_restaurants"))
+            return render_template("edit_restaurant.html",
+                                restaurant=restaurant, counties=counties)
 
 
 """ https://www.geeksforgeeks.org/python-404-error-handling-in-flask/ """
