@@ -26,7 +26,8 @@ def get_restaurants():
     else:
         role = ""
     restaurants = mongo.db.restaurants.find({"status": "approved"})
-    return render_template("get_restaurants.html", restaurants=restaurants, role=role)
+    counties = mongo.db.counties.find().sort("name", 1)
+    return render_template("get_restaurants.html", restaurants=restaurants, role=role, counties=counties)
 
 
 @app.route("/add_restaurant", methods=["GET", "POST"])
@@ -257,6 +258,41 @@ def edit_restaurant(restaurant_id):
 def delete_restaurant(restaurant_id):
     mongo.db.restaurants.delete_one({"_id": ObjectId(restaurant_id)})
     return redirect(url_for("get_restaurants"))
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if session:
+        user = mongo.db.users.find_one({"username": session["user"]})
+        role = user["role"]
+    else:
+        role = ""
+    counties = mongo.db.counties.find().sort("name", 1)
+    name = request.form.get("name")
+    county = request.form.get("address_county")
+    if name:
+        if not county:
+            all = list(mongo.db.restaurants.find({"$text": {"$search": name}}))
+        else:
+            all = []
+            by_name = list(mongo.db.restaurants.find({"$text": {"$search": name}}))
+            for restaurant in by_name:
+                if restaurant["address_county"] == county:
+                    all.append(restaurant)
+    elif county:
+        all = list(mongo.db.restaurants.find({"$text": {"$search": county}}))
+    else:
+        all = mongo.db.restaurants.find().sort("name", 1)
+    restaurants = only_approved(all)
+    return render_template("get_restaurants.html", restaurants=restaurants, role=role, counties=counties)
+
+
+def only_approved(all):
+    restaurants = []
+    for item in all:
+        if item["status"] == "approved":
+            restaurants.append(item)
+    return restaurants
 
 
 """ https://www.geeksforgeeks.org/python-404-error-handling-in-flask/ """

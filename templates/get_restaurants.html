@@ -3,7 +3,32 @@
 
 <!-- search bar -->
 
-
+<div class="row card-panel red lighten-5">
+    <form action="{{ url_for('search') }}" method="POST" class="col s12">
+        <div class="row valign-wrapper center-align">
+            <div class="input-field col s12 m8">
+                <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
+                <input type="text" name="name" id="name" minlength="3" class="validate">
+                <label for="name">Search Restaurant</label>
+            </div>
+            <div class="input-field col s12 m4">
+                <select id="address_county" name="address_county" class="validate">
+                    <option value="" selected>All counties</option>
+                    {% for county in counties %}
+                    <option value="{{ county.name }}">{{ county.name.capitalize() }}</option>
+                    {% endfor %}
+                </select>
+                <label>County</label>
+            </div>
+            <div class="col s12 m4">
+                <a href="{{ url_for('get_restaurants') }}" class="red btn">Reset</a>
+                <button type="submit" class="light-blue darken-1 btn">
+                    <i class="fas fa-search left"></i> Search
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <!-- list of restaurants -->
 
@@ -90,8 +115,8 @@
                 {% endfor %}
                 {% else %}
                 <p>It looks like there are no reviews for this restaurant. Be the first to leave one!</p>
-                <a href="{{ url_for('add_review', restaurant_id=restaurant._id) }}"
-                    class="btn lighten-1">Leave a review</a>
+                <a href="{{ url_for('add_review', restaurant_id=restaurant._id) }}" class="btn lighten-1">Leave a
+                    review</a>
                 {% endif %}
             </div>
 
