@@ -83,7 +83,8 @@ def login_register():
                 "username": request.form.get("username").lower(),
                 "password": generate_password_hash(request.
                                                    form.get("password")),
-                "address_county": request.form.get("address_county").lower()
+                "address_county": request.form.get("address_county").lower(),
+                "role": "user"
             }
             mongo.db.users.insert_one(register)
 
