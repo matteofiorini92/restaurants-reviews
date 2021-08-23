@@ -4,7 +4,7 @@
 <h3 class="grey-text text-darken-4 center-align">Add a new review</h3>
 
 <div class="row card-panel grey lighten-5">
-    <form class="col s12" method="POST" action="{{ url_for('add_review', restaurant_id='') }}">
+    <form class="col s12" method="POST" action="{{ url_for('add_review') }}">
         <!-- restaurants are passed by app.py from the restaurants existing (and approved) in the db -->
         <div class="row">
             <div class="input-field col s12">

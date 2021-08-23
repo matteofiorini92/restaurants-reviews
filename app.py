@@ -134,11 +134,9 @@ def add_review(restaurant_id):
         restaurants = mongo.db.restaurants.find({"status": "approved"}).sort(
                                                 "name", 1)
         if restaurant_id:
-            print(restaurant_id)
             restaurant = mongo.db.restaurants.find_one({"_id": ObjectId(restaurant_id)}, {"name": 1, "_id": 0})["name"]
-            print(restaurant)
         else:
-            restaurant = ""   
+            restaurant = ""
         if request.method == "POST":
             name = request.form.get("name")
             review = {
@@ -207,7 +205,7 @@ def edit_review(review_id):
         update_star_score = {"$set": {"reviews.$.star_score": int(request.form.get("star_score"))}}
         mongo.db.restaurants.update_one(query, update_description)
         mongo.db.restaurants.update_one(query, update_star_score)
-        mongo.db.restaurants.update_one({"name": restaurant["name"]}, {"$set": {"avg_star_score": calculate_average_star_score(name)}})
+        mongo.db.restaurants.update_one({"name": restaurant["name"]}, {"$set": {"avg_star_score": calculate_average_star_score(restaurant["name"])}})
         return render_template("my_reviews.html")
     return render_template("edit_review.html",
                            review=review, restaurant=restaurant)
