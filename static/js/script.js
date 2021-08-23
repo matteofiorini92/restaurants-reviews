@@ -8,11 +8,11 @@ $(".star-rating").click(function () {
   for (let i = 1; i <= 5; i++) {
     let star = "star-" + i;
     $("#"+star).removeClass("golden-star");
-    $("#"+star).addClass("grey-star");
+    $("#"+star).addClass("greyed-out");
   }
   for (let i = 1; i <= 5; i++) {
     let star = "star-" + i;
-    $("#"+star).removeClass("grey-star");
+    $("#"+star).removeClass("greyed-out");
     $("#"+star).addClass("golden-star");
     if (this.id === star) {
       $("#star_score").val(i);
