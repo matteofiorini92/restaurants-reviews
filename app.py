@@ -22,12 +22,11 @@ mongo = PyMongo(app)
 def get_restaurants():
     if session:
         user = mongo.db.users.find_one({"username": session["user"]})
-        role = user["role"]
     else:
-        role = ""
+        user = [{"role": ""}, {"username": ""}]
     restaurants = mongo.db.restaurants.find({"status": "approved"})
     counties = mongo.db.counties.find().sort("name", 1)
-    return render_template("get_restaurants.html", restaurants=restaurants, role=role, counties=counties)
+    return render_template("get_restaurants.html", restaurants=restaurants, user=user, counties=counties)
 
 
 @app.route("/add_restaurant", methods=["GET", "POST"])
@@ -260,13 +259,22 @@ def delete_restaurant(restaurant_id):
     return redirect(url_for("get_restaurants"))
 
 
+@app.route("/delete_review/<review_id>", methods=["GET", "POST"])
+def delete_review(review_id):
+    restaurant = mongo.db.restaurants.find_one({"reviews._id": ObjectId(review_id)})
+    """ https://stackoverflow.com/questions/15641492/mongodb-remove-object-from-array """
+    mongo.db.restaurants.update({"_id": ObjectId(restaurant["_id"])},
+    {"$pull": {"reviews": {"_id": ObjectId(review_id)}}})
+    mongo.db.restaurants.update_one({"name": restaurant["name"]}, {"$set": {"avg_star_score": calculate_average_star_score(restaurant["name"])}})
+    return redirect(url_for("get_restaurants"))
+
+
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if session:
         user = mongo.db.users.find_one({"username": session["user"]})
-        role = user["role"]
     else:
-        role = ""
+        user = [{"role": ""}, {"username": ""}]
     counties = mongo.db.counties.find().sort("name", 1)
     name = request.form.get("name")
     county = request.form.get("address_county")
@@ -284,7 +292,7 @@ def search():
     else:
         all = mongo.db.restaurants.find().sort("name", 1)
     restaurants = only_approved(all)
-    return render_template("get_restaurants.html", restaurants=restaurants, role=role, counties=counties)
+    return render_template("get_restaurants.html", restaurants=restaurants, user=user, counties=counties)
 
 
 def only_approved(all):
@@ -306,12 +314,15 @@ def not_found(e):
 def calculate_average_star_score(name):
     restaurant = mongo.db.restaurants.find_one({"name": name})
     reviews = restaurant["reviews"]
-    star_scores = []
-    for review in reviews:
-        star_scores.append(int(review["star_score"]))
-    print(star_scores)
-    print(sum(star_scores)/len(star_scores))
-    average = math.floor(sum(star_scores)/len(star_scores))
+    if len(reviews): 
+        star_scores = []
+        for review in reviews:
+            star_scores.append(int(review["star_score"]))
+        print(star_scores)
+        print(sum(star_scores)/len(star_scores))
+        average = math.floor(sum(star_scores)/len(star_scores))
+    else:
+        average = 0
     return average
 
 
