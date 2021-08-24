@@ -3,6 +3,10 @@
     vertical-align: bottom;
 }
 
+.container {
+  width: 90%
+}
+
 .restaurant-card {
     height: 300px;
 }

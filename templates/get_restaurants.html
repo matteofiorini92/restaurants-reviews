@@ -3,11 +3,10 @@
 
 <!-- search bar -->
 
-<div class="row card-panel red lighten-5">
+<div class="row card red lighten-5">
     <form action="{{ url_for('search') }}" method="POST" class="col s12">
         <div class="row valign-wrapper center-align">
             <div class="input-field col s12 m8">
-                <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
                 <input type="text" name="name" id="name" minlength="3" class="validate">
                 <label for="name">Search Restaurant</label>
             </div>
@@ -21,8 +20,8 @@
                 <label>County</label>
             </div>
             <div class="col s12 m4">
-                <a href="{{ url_for('get_restaurants') }}" class="red btn">Reset</a>
-                <button type="submit" class="light-blue darken-1 btn">
+                <a href="{{ url_for('get_restaurants') }}" class="red btn-small">Reset</a>
+                <button type="submit" class="light-blue darken-1 btn-small">
                     <i class="fas fa-search left"></i> Search
                 </button>
             </div>
@@ -37,46 +36,49 @@
     <div class="col s12 m6">
         <div class="card sticky-action restaurant-card">
             <div class="card-content">
-                <div class="card-title grey-text text-darken-4">{{ restaurant.name }}
-                    <!-- add links to social if they exist, otherwise add greyed out icon -->
-                    <span class="social-links">
-                        {% if restaurant.website %}
-                        <a href="{{ restaurant.website }}" target="_blank"><i
-                                class="fas fa-globe deep-orange-text text-accent-4"></i></a>
-                        {% else %}
-                        <i class="fas fa-globe greyed-out"></i>
-                        {% endif %}
-                        {% if restaurant.fb_page %}
-                        <a href="{{ restaurant.fb_page }}" target="_blank"><i
-                                class="fab fa-facebook deep-orange-text text-accent-4"></i></a>
-                        {% else %}
-                        <i class="fab fa-facebook greyed-out"></i>
-                        {% endif %}
-                        {% if restaurant.ig_page %}
-                        <a href="{{ restaurant.ig_page }}" target="_blank"><i
-                                class="fab fa-instagram deep-orange-text text-accent-4"></i></a>
-                        {% else %}
-                        <i class="fab fa-instagram greyed-out"></i>
-                        {% endif %}
-                    </span>
+                <div class="card-title grey-text text-darken-4">
+                    {{ restaurant.name }}
+                    {% for i in range(1, restaurant.avg_star_score|int + 1 ) %}
+                    <i class="fas fa-star float-right golden-star"></i>
+                    {% endfor %}
                 </div>
                 {% for i in range(1, restaurant.pricing_score|int) %}
                 <i class="fas fa-euro-sign"></i>
                 {% endfor %}
-                </span>
                 <div class="row">
-                    <div class="col s12 m6">
-                        <h5><i class="fas fa-map-marker-alt prefix"></i> {{ restaurant.address_street }}</h5>
+                    <div class="col s12 m10">
+                        <p> {{ restaurant.address_street }}</p>
                         <p>{{ restaurant.address_city }}</p>
                         <p>Co. {{ restaurant.address_county|capitalize }}</p>
                         <p><i class="fas fa-phone-alt"></i> {{ restaurant.tel }}</p>
                         <p><i class="fas fa-at"></i> {{ restaurant.email_address }}</p>
                     </div>
-                    <div class="col s12 m6">
+                    <div class="col s12 m2">
                         <!-- placeholder for vegan and gluten free icons-->
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn activator">Read some reviews</a>
+                <!-- add links to social if they exist, otherwise add greyed out icon -->
+                <span class="social-links">
+                    {% if restaurant.website %}
+                    <a href="{{ restaurant.website }}" target="_blank"><i
+                            class="fas fa-globe deep-orange-text text-accent-4 fa-2x"></i></a>
+                    {% else %}
+                    <i class="fas fa-globe greyed-out"></i>
+                    {% endif %}
+                    {% if restaurant.fb_page %}
+                    <a href="{{ restaurant.fb_page }}" target="_blank"><i
+                            class="fab fa-facebook deep-orange-text text-accent-4 fa-2x"></i></a>
+                    {% else %}
+                    <i class="fab fa-facebook greyed-out"></i>
+                    {% endif %}
+                    {% if restaurant.ig_page %}
+                    <a href="{{ restaurant.ig_page }}" target="_blank"><i
+                            class="fab fa-instagram deep-orange-text text-accent-4 fa-2x"></i></a>
+                    {% else %}
+                    <i class="fab fa-instagram greyed-out"></i>
+                    {% endif %}
+                </span>
                 {% if user.role == "admin" %}
                 <a href="{{ url_for('edit_restaurant', restaurant_id=restaurant._id) }}"
                     class="btn light-blue lighten-1">Edit</a>
@@ -97,39 +99,36 @@
                     </div>
                 </div>
                 {% endif %}
-                {% for i in range(1, restaurant.avg_star_score|int + 1 ) %}
-                <i class="fas fa-star float-right fa-2x golden-star"></i>
-                {% endfor %}
             </div>
             <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4">{{ restaurant.name }}<i
                         class="fas fa-times close-reveal"></i></span>
                 {% if restaurant.reviews %}
-                    {% for review in restaurant.reviews %}
-                    <p>{{ review.description }}</p>
-                    <p>{{ review.author }}</p>
-                        {% for i in range(1, review.star_score|int + 1 ) %}
-                        <i class="fas fa-star golden-star"></i>
-                        {% endfor %}
-                        {% if user.role == "admin" or user.username == review.author  %}
-                        <!-- Modal Trigger -->
-                        <a class="waves-effect waves-light btn modal-trigger red float-right"
-                            href="#delete_modal_{{ review._id }}">Delete</a>
+                {% for review in restaurant.reviews %}
+                <p>{{ review.description }}</p>
+                <p>{{ review.author }}</p>
+                {% for i in range(1, review.star_score|int + 1 ) %}
+                <i class="fas fa-star golden-star"></i>
+                {% endfor %}
+                {% if user.role == "admin" or user.username == review.author  %}
+                <!-- Modal Trigger -->
+                <a class="waves-effect waves-light btn modal-trigger red float-right"
+                    href="#delete_modal_{{ review._id }}">Delete</a>
 
-                        <!-- Modal Structure -->
-                        <div id="delete_modal_{{ review._id }}" class="modal">
-                            <div class="modal-content">
-                                <h4>Are you sure?</h4>
-                                <p>This action can't be undone!</p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#" class="btn modal-close lighten-1">OK, let's leave it</a>
-                                <a href="{{ url_for('delete_review', review_id=review._id) }}"
-                                    class="btn red lighten-1">Delete</a>
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
+                <!-- Modal Structure -->
+                <div id="delete_modal_{{ review._id }}" class="modal">
+                    <div class="modal-content">
+                        <h4>Are you sure?</h4>
+                        <p>This action can't be undone!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn modal-close lighten-1">OK, let's leave it</a>
+                        <a href="{{ url_for('delete_review', review_id=review._id) }}"
+                            class="btn red lighten-1">Delete</a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
                 {% else %}
                 <p>It looks like there are no reviews for this restaurant. Be the first to leave one!</p>
                 <a href="{{ url_for('add_review', restaurant_id=restaurant._id) }}" class="btn lighten-1">Leave a
