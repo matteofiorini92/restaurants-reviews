@@ -26,10 +26,10 @@
         <div class="row center-align">
             <div class="col s12 m6">
                 <input type="hidden" name="star_score" id="star_score" value="{{ review.star_score }}">
-                {% for i in range(1, review.star_score|int) %}
+                {% for i in range(1, review.star_score|int + 1) %}
                 <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating golden-star"></i>
                 {% endfor %}
-                {% for i in range(review.star_score|int, 6) %}
+                {% for i in range(review.star_score|int, 5) %}
                 <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating greyed-out"></i>
                 {% endfor %}
             </div>
