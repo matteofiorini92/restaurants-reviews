@@ -29,7 +29,7 @@
                 {% for i in range(1, review.star_score|int + 1) %}
                 <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating golden-star"></i>
                 {% endfor %}
-                {% for i in range(review.star_score|int, 5) %}
+                {% for i in range(review.star_score|int + 1, 6) %}
                 <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating greyed-out"></i>
                 {% endfor %}
             </div>
