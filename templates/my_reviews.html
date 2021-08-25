@@ -3,7 +3,7 @@
 <div class="row">
     {% for review in reviews %}
     <div class="col s12 m6">
-        <form class="card review-card" action="{{ url_for('edit_review', review_id=review.review._id) }}" method="GET">
+        <form class="card review-card white-transparent" action="{{ url_for('edit_review', review_id=review.review._id) }}" method="GET">
             <input type="hidden" name="review_id" value="{{ review.review._id }}">
             <div class="card-content">
                 <div class="card-title grey-text text-darken-4">{{ review.name }} </div>

@@ -33,6 +33,15 @@
   background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
+.input-field>label {
+  color: #000000;
+}
+
+.label-black-bigger {
+  color: #000000;
+  font-size: .9rem;
+}
+
 .social-links {
     float: right;
 }

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+{% block title %}
+{% endblock %}
+
+
+<!-- restaurant name -->
+<div class="row">
+    <div class="input-field col s12">
+        <i class="fas fa-utensils prefix deep-orange-text text-accent-4"></i>
+        <input id="name" name="name" type="text" class="validate">
+        <label for="name">Restaurant Name</label>
+    </div>
+</div>
+<!-- restaurant address street -->
+<div class="row">
+    <div class="input-field col s12">
+        <i class="fas fa-store-alt prefix deep-orange-text text-accent-4"></i>
+        <input id="address_street" name="address_street" type="text" class="validate">
+        <label for="address_street">Address Street</label>
+    </div>
+</div>
+<!-- restaurant address city and county-->
+<div class="row">
+    <div class="input-field col s6">
+        <input id="address_city" name="address_city" type="text" class="validate">
+        <label for="address_city">City</label>
+    </div>
+    <!-- counties are passed by app.py from the counties collection of the db -->
+    <div class="input-field col s6">
+        <select id="address_county" name="address_county" class="validate" required>
+            <option value="" disabled selected>Choose County</option>
+            {% for county in counties %}
+            <option value="{{ county.name }}">{{ county.name.capitalize() }}</option>
+            {% endfor %}
+        </select>
+        <label>County</label>
+    </div>
+</div>
+<!-- restaurant phone and email -->
+<div class="row">
+    <div class="input-field col s6">
+        <input id="tel" name="tel" type="tel" class="validate">
+        <label for="tel">Phone Number</label>
+    </div>
+    <div class="input-field col s6">
+        <input id="email_address" name="email_address" type="email" class="validate">
+        <label for="email_address">Email Address</label>
+    </div>
+</div>
+<!-- restaurant website, facebook and instangram links -->
+<div class="row">
+    <div class="input-field col s4">
+        <i class="fas fa-globe prefix deep-orange-text text-accent-4"></i>
+        <input id="website" name="website" type="url" class="validate">
+        <label for="website">Website</label>
+    </div>
+    <div class="input-field col s4">
+        <i class="fab fa-facebook prefix deep-orange-text text-accent-4"></i>
+        <input id="fb_page" name="fb_page" type="url" class="validate">
+        <label for="fb_page">Facebook</label>
+    </div>
+    <div class="input-field col s4">
+        <i class="fab fa-instagram prefix deep-orange-text text-accent-4"></i>
+        <input id="ig_page" name="ig_page" type="url" class="validate">
+        <label for="ig_page">Instagram</label>
+    </div>
+</div>
+<!-- has vegan and gluten free options and price score -->
+<div class="row">
+    <div class="input-field col s4">
+        <div class="switch">
+            <label class="label-black-bigger">
+                <input type="checkbox" id="has_vegan_options" name="has_vegan_options">
+                <span class="lever"></span>
+                Has vegan options?
+            </label>
+        </div>
+    </div>
+    <div class="input-field col s4">
+        <div class="switch">
+            <label class="label-black-bigger">
+                <input type="checkbox" id="has_gluten_free_options" name="has_gluten_free_options">
+                <span class="lever"></span>
+                Has gluten-free options?
+            </label>
+        </div>
+    </div>
+    <div class="range-field col s4">
+        <input type="range" id="pricing_score" name="pricing_score" min="1" max="5" value="1" />
+        <label for="pricing_score" class="label-black-bigger">Pricing Score</label>
+    </div>
+</div>
+{% block buttons %}
+{% endblock %}
+{% endblock %}

@@ -83,8 +83,9 @@ def add_restaurant():
             }
             mongo.db.restaurants.insert_one(restaurant)
             # add restaurant to the DB
+        restaurant = {}
         counties = mongo.db.counties.find().sort("name", 1)
-        return render_template("add_restaurant.html", counties=counties)
+        return render_template("add_restaurant.html", counties=counties, restaurant=restaurant)
 
 
 @app.route("/login_register", methods=["GET", "POST"])
