@@ -184,6 +184,9 @@ def add_review(restaurant_id):
             restaurant = ""
         if request.method == "POST":
             name = request.form.get("name")
+            restaurant_id = mongo.db.restaurants.find_one(
+                {"name": name},
+                {"_id": 1})["_id"]
             review = {  # create review to add to the DB
                 "_id": ObjectId(),
                 "author": session["user"],
@@ -191,7 +194,7 @@ def add_review(restaurant_id):
                 "star_score": int(request.form.get("star_score"))
             }
             mongo.db.restaurants.update_one({  # add review to DB
-                "name": name}, {
+                "_id": ObjectId(restaurant_id)}, {
                     "$push": {
                         "reviews": review
                     }
@@ -200,7 +203,9 @@ def add_review(restaurant_id):
             mongo.db.restaurants.update_one({  # calculate new avg star score
                 "name": name}, {
                     "$set": {
-                        "avg_star_score": calculate_average_star_score(name)
+                        "avg_star_score": calculate_average_star_score(
+                            restaurant_id
+                        )
                     }
                 }
             )
@@ -255,16 +260,24 @@ def approve_restaurants():
 
 @app.route("/my_reviews")
 def my_reviews():
+    """
+    Renders the page with reviews written by current user.
+    Only works if user is logged in.
+    """
     if not session:
         # 401 = unauthorized - triggered if the user is not logged in
         return render_template("401.html")
     else:
         user = session["user"]
         restaurants = mongo.db.restaurants.find({"reviews.author": user})
+        # gets restaurantw with reviews written by current user
         reviews = []
         for restaurant in restaurants:
+            # iterate through restaurants with reviews written by current user
             for review in restaurant["reviews"]:
+                # iterate through all reviews of these restaurants
                 if review["author"] == user:
+                    # add them to an array of objects if author is current user
                     reviews.append(
                         {"name": restaurant["name"],
                          "review": review})
@@ -273,6 +286,13 @@ def my_reviews():
 
 @app.route("/edit_review/<review_id>", methods=["GET", "POST"])
 def edit_review(review_id):
+    """
+    Function to edit a review. Only available to the author.
+    Admin users don't have access to this as they can only delete
+    a review when it's needed (swearing, unfair reviews, etc.),
+    but they are not allowed to edit something that will still
+    show as written by the original user.
+    """
     restaurants = mongo.db.restaurants.find(
         {"reviews._id": ObjectId(review_id)})
     for restaurant in restaurants:
@@ -282,7 +302,7 @@ def edit_review(review_id):
                 break
     if request.method == "POST":
         query = {
-            "name": restaurant["name"],
+            "_id": restaurant["_id"],
             "reviews._id": ObjectId(review_id)}
         update_description = {
             "$set": {
@@ -296,7 +316,7 @@ def edit_review(review_id):
             "name": restaurant["name"]}, {
                 "$set": {
                     "avg_star_score": calculate_average_star_score(
-                        restaurant["name"]
+                        restaurant["_id"]
                     )
                 }
             }
@@ -368,7 +388,7 @@ def delete_review(review_id):
     )
     """ https://stackoverflow.com/questions/15641492/mongodb-remove-object-from-array """
     mongo.db.restaurants.update({
-        "_id": ObjectId(restaurant["_id"])}, {
+        "_id": restaurant["_id"]}, {
             "$pull": {
                 "reviews": {
                     "_id": ObjectId(review_id)
@@ -377,10 +397,10 @@ def delete_review(review_id):
         }
     )
     mongo.db.restaurants.update_one({
-        "name": restaurant["name"]}, {
+        "_id": restaurant["_id"]}, {
             "$set": {
                 "avg_star_score": calculate_average_star_score(
-                    restaurant["name"]
+                    restaurant["_id"]
                 )
             }
         }
@@ -441,18 +461,20 @@ def not_found(e):
     return render_template("404.html")
 
 
-def calculate_average_star_score(name):
-    restaurant = mongo.db.restaurants.find_one({"name": name})
-    reviews = restaurant["reviews"]
-    if len(reviews):
+def calculate_average_star_score(id):
+    """
+    Calculates the average star score of a restaurant based on its reviews
+    It's called after each time a review is added/edited/deleted
+    """
+    restaurant = mongo.db.restaurants.find_one({"_id": ObjectId(id)})
+    reviews = restaurant["reviews"]  # get list of reviews of the restaurant
+    if len(reviews):  # only running if there are reviews
         star_scores = []
-        for review in reviews:
+        for review in reviews:  # make an array with just star scores
             star_scores.append(int(review["star_score"]))
-        print(star_scores)
-        print(sum(star_scores)/len(star_scores))
         average = math.floor(sum(star_scores)/len(star_scores))
     else:
-        average = 0
+        average = 0  # if there are no reviews, average is 0
     return average
 
 
