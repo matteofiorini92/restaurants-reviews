@@ -29,7 +29,7 @@
                     <li><a href="{{ url_for('my_reviews') }}">My Reviews</a></li>
                     <li><a href="{{ url_for('add_review') }}">Add Review</a></li>
                     <li><a href="{{ url_for('add_restaurant') }}">Add Restaurant</a></li>
-                    {% if session.user|lower == 'mfiorini'|lower %}
+                    {% if user.role == "admin" %}
                     <li><a href="{{ url_for('approve_restaurants') }}">Approve restaurants</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('logout') }}">Log-out</a></li>

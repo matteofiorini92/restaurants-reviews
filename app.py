@@ -126,9 +126,9 @@ def login_register():
             return redirect(url_for("get_restaurants",
                                     username=session["user"]))
         else:  # type is log_in
-            existing_user = mongo.db.users.find_one({"username":
-                                                    request.form.
-                                                    get("username").lower()})
+            existing_user = mongo.db.users.find_one({
+                "username": request.form.get("username").lower()
+            })
             # check if username exists in db
             if existing_user:
                 if check_password_hash(
