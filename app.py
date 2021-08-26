@@ -255,7 +255,8 @@ def approve_restaurants():
                 )
             return render_template(
                 "approve_restaurants.html",
-                restaurants=restaurants
+                restaurants=restaurants,
+                user=user
             )
 
 
