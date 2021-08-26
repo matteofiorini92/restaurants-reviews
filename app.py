@@ -54,6 +54,7 @@ def add_restaurant():
         # 401 = unauthorized - triggered if the user is not logged in
         return render_template("401.html")
     else:
+        user = mongo.db.users.find_one({"username": session["user"]})
         if request.method == "POST":
             if request.form.get("has_vegan_options"):
                 has_vegan_options = True
@@ -85,7 +86,12 @@ def add_restaurant():
             # add restaurant to the DB
         restaurant = {}
         counties = mongo.db.counties.find().sort("name", 1)
-        return render_template("add_restaurant.html", counties=counties, restaurant=restaurant)
+        return render_template(
+            "add_restaurant.html",
+            counties=counties,
+            restaurant=restaurant,
+            user=user
+        )
 
 
 @app.route("/login_register", methods=["GET", "POST"])
@@ -171,6 +177,7 @@ def add_review(restaurant_id):
         # 401 = unauthorized - triggered if the user is not logged in
         return render_template("401.html")
     else:  # get list of restaurants from DB to pass as a parameter
+        user = mongo.db.users.find_one({"username": session["user"]})
         restaurants = mongo.db.restaurants.find(
             {"status": "approved"}
         ).sort(
@@ -213,7 +220,8 @@ def add_review(restaurant_id):
         return render_template(
             "add_review.html",
             restaurants=restaurants,
-            chosen_restaurant=restaurant
+            chosen_restaurant=restaurant,
+            user=user
         )
 
 
@@ -270,20 +278,23 @@ def my_reviews():
         # 401 = unauthorized - triggered if the user is not logged in
         return render_template("401.html")
     else:
-        user = session["user"]
-        restaurants = mongo.db.restaurants.find({"reviews.author": user})
+        user = mongo.db.users.find_one({"username": session["user"]})
+        print(user)
+        restaurants = mongo.db.restaurants.find({
+            "reviews.author": user["username"]
+        })
         # gets restaurantw with reviews written by current user
         reviews = []
         for restaurant in restaurants:
             # iterate through restaurants with reviews written by current user
             for review in restaurant["reviews"]:
                 # iterate through all reviews of these restaurants
-                if review["author"] == user:
+                if review["author"] == user["username"]:
                     # add them to an array of objects if author is current user
                     reviews.append(
                         {"name": restaurant["name"],
                          "review": review})
-        return render_template("my_reviews.html", reviews=reviews)
+        return render_template("my_reviews.html", reviews=reviews, user=user)
 
 
 @app.route("/edit_review/<review_id>", methods=["GET", "POST"])
@@ -295,6 +306,7 @@ def edit_review(review_id):
     but they are not allowed to edit something that will still
     show as written by the original user.
     """
+    user = mongo.db.users.find_one({"username": session["user"]})
     restaurants = mongo.db.restaurants.find(
         {"reviews._id": ObjectId(review_id)})
     for restaurant in restaurants:
@@ -324,8 +336,12 @@ def edit_review(review_id):
             }
         )
         return render_template("my_reviews.html")
-    return render_template("edit_review.html",
-                           review=review, restaurant=restaurant)
+    return render_template(
+        "edit_review.html",
+        review=review,
+        restaurant=restaurant,
+        user=user
+    )
 
 
 @app.route("/edit_restaurant/<restaurant_id>", methods=["GET", "POST"])
@@ -373,7 +389,8 @@ def edit_restaurant(restaurant_id):
             return render_template(
                 "edit_restaurant.html",
                 restaurant=restaurant,
-                counties=counties
+                counties=counties,
+                user=user
             )
 
 
