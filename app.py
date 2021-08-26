@@ -238,9 +238,10 @@ def logout():
     session.pop("user")
     return redirect(url_for('login_register'))
 
-
-@app.route("/approve_restaurants", methods=["GET", "POST"])
-def approve_restaurants():
+@app.route("/approve_restaurants", defaults={'restaurant_id': None},
+           methods=["GET", "POST"])
+@app.route("/approve_restaurants/<restaurant_id>", methods=["GET", "POST"])
+def approve_restaurants(restaurant_id):
     """
     This function is only available to admin users
     It allows to change the status of a restaurant from
@@ -256,16 +257,16 @@ def approve_restaurants():
             # 403 = forbidden - triggered if the user is not an admin
             return render_template("403.html")
         else:
-            restaurants = mongo.db.restaurants.find({"status": "pending"})
-            if request.method == "POST":
-                name = request.form.get("name")
+            restaurants = list(mongo.db.restaurants.find({"status": "pending"}))
+            if restaurant_id:
                 mongo.db.restaurants.update_one({
-                    "name": name}, {
+                    "_id": ObjectId(restaurant_id)}, {
                         "$set": {
                             "status": "approved"
                         }
                     }
                 )
+                return redirect(url_for("approve_restaurants"))
             return render_template(
                 "approve_restaurants.html",
                 restaurants=restaurants,

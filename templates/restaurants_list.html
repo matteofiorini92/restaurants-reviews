@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- search bar -->
+
+{% block searchbar %}
+{% endblock %}
+
+<!-- list of restaurants -->
+
+<div class="row">
+    {% for restaurant in restaurants %}
+    <div class="col s12 m6">
+        <div class="card sticky-action restaurant-card white-transparent">
+            <div class="card-content">
+                <div class="card-title grey-text text-darken-4">
+                    {{ restaurant.name }}
+                    {% for i in range(1, restaurant.avg_star_score|int + 1 ) %}
+                    <i class="fas fa-star float-right golden-star"></i>
+                    {% endfor %}
+                </div>
+                {% for i in range(1, restaurant.pricing_score|int) %}
+                <i class="fas fa-euro-sign"></i>
+                {% endfor %}
+                <div class="row">
+                    <div class="col s12 m10">
+                        <p> {{ restaurant.address_street }}</p>
+                        <p>{{ restaurant.address_city }}</p>
+                        <p>Co. {{ restaurant.address_county|capitalize }}</p>
+                        <p><i class="fas fa-phone-alt"></i> {{ restaurant.tel }}</p>
+                        <p><i class="fas fa-at"></i> {{ restaurant.email_address }}</p>
+                    </div>
+                    <div class="col s12 m2">
+                        <!-- placeholder for vegan and gluten free icons-->
+                    </div>
+                </div>
+                {% block review1%}
+                {% endblock %}
+                <!-- add links to social if they exist, otherwise add greyed out icon -->
+                <span class="social-links">
+                    {% if restaurant.website %}
+                    <a href="{{ restaurant.website }}" target="_blank"><i
+                            class="fas fa-globe deep-orange-text text-accent-4 fa-2x"></i></a>
+                    {% else %}
+                    <i class="fas fa-globe greyed-out fa-2x"></i>
+                    {% endif %}
+                    {% if restaurant.fb_page %}
+                    <a href="{{ restaurant.fb_page }}" target="_blank"><i
+                            class="fab fa-facebook deep-orange-text text-accent-4 fa-2x"></i></a>
+                    {% else %}
+                    <i class="fab fa-facebook greyed-out fa-2x"></i>
+                    {% endif %}
+                    {% if restaurant.ig_page %}
+                    <a href="{{ restaurant.ig_page }}" target="_blank"><i
+                            class="fab fa-instagram deep-orange-text text-accent-4 fa-2x"></i></a>
+                    {% else %}
+                    <i class="fab fa-instagram greyed-out fa-2x"></i>
+                    {% endif %}
+                </span>
+<!-- https://jinja.palletsprojects.com/en/2.10.x/templates/#block-nesting-and-scope -->
+                {% block buttons scoped %}
+                {% endblock %}
+            </div>
+            {% block review2 scoped %}
+            {% endblock %}
+
+
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
