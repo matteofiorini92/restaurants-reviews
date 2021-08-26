@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+{% block title %}
+{% endblock %}
+<!-- restaurants are passed by app.py from the restaurants existing (and approved) in the db -->
+<div class="row">
+    <div class="input-field col s12">
+        <select id="name" name="name" class="validate" required>
+            {% if restaurant.name == "" %}
+            <option value="" disabled selected>Select Restaurant</option>
+            {% for r in restaurants %}
+            <option value="{{ r.name }}">{{ r.name.capitalize() }}</option>
+            {% endfor %}
+            {% else %}
+            <option value="{{ restaurant.name }}" selected>{{ restaurant.name.capitalize() }}</option>
+            {% endif %}
+        </select>
+        <label for="name">Restaurant</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field col s12">
+        <textarea id="description" name="description" class="materialize-textarea">{{ review.description }}</textarea>
+        <label for="description">Your Review</label>
+    </div>
+</div>
+
+<div class="row center-align">
+    <div class="col s12 m6">
+        <input type="hidden" name="star_score" id="star_score" value="{{ review.star_score }}">
+        {% for i in range(1, review.star_score|int + 1) %}
+        <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating golden-star"></i>
+        {% endfor %}
+        {% for i in range(review.star_score|int + 1, 6) %}
+        <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating greyed-out"></i>
+        {% endfor %}
+    </div>
+
+
+    {% block buttons %}
+    {% endblock %}
+    {% endblock %}
+</div>
+</form>
+</div>

@@ -1,49 +1,19 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "review.html" %}
 
+{% block title %}
 <h3 class="grey-text text-darken-4 center-align">Edit your review</h3>
 
 <div class="row card-panel white-transparent">
     <form class="col s12" method="POST" action="{{ url_for('edit_review', review_id=review._id) }}">
-        <!-- restaurants are passed by app.py from the restaurants existing (and approved) in the db -->
-        <div class="row">
-            <div class="input-field col s12">
-                <select id="name" name="name" class="validate" required>
-                    <option value="{{ restaurant.name }}" disabled selected>{{ restaurant.name }}</option>
-                </select>
-                <label for="name">Restaurant</label>
-            </div>
+{% endblock %}
+
+{% block buttons %}
+        <div class="col s12 m6">
+            <button class="btn waves-effect waves-light red" type="cancel" name="add_review_cancel">Cancel
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="btn waves-effect waves-light" type="submit" name="add_review_submit">Edit
+                <i class="fas fa-check"></i>
+            </button>
         </div>
-
-        <div class="row">
-            <div class="input-field col s12">
-                <textarea id="description" name="description"
-                    class="materialize-textarea">{{ review.description }}</textarea>
-                <label for="description">Your Review</label>
-            </div>
-        </div>
-
-        <div class="row center-align">
-            <div class="col s12 m6">
-                <input type="hidden" name="star_score" id="star_score" value="{{ review.star_score }}">
-                {% for i in range(1, review.star_score|int + 1) %}
-                <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating golden-star"></i>
-                {% endfor %}
-                {% for i in range(review.star_score|int + 1, 6) %}
-                <i id="star-{{ i }}" class="fas fa-star fa-2x star-rating greyed-out"></i>
-                {% endfor %}
-            </div>
-            <div class="col s12 m6">
-                <button class="btn waves-effect waves-light red" type="cancel" name="add_review_cancel">Cancel
-                    <i class="fas fa-times"></i>
-                </button>
-                <button class="btn waves-effect waves-light" type="submit" name="add_review_submit">Edit
-                    <i class="fas fa-check"></i>
-                </button>
-            </div>
-        </div>
-
-    </form>
-</div>
-
 {% endblock %}

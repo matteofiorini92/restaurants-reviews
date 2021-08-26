@@ -177,6 +177,12 @@ def add_review(restaurant_id):
         # 401 = unauthorized - triggered if the user is not logged in
         return render_template("401.html")
     else:  # get list of restaurants from DB to pass as a parameter
+        review = {
+            "_id": ObjectId(),
+            "author": "",
+            "description": "",
+            "star_score": 3
+        }
         user = mongo.db.users.find_one({"username": session["user"]})
         restaurants = mongo.db.restaurants.find(
             {"status": "approved"}
@@ -185,22 +191,20 @@ def add_review(restaurant_id):
         )
         if restaurant_id:  # if restaurant_id exists, find the relevant name
             restaurant = mongo.db.restaurants.find_one(
-                {"_id": ObjectId(restaurant_id)},
-                {"name": 1, "_id": 0}
-            )["name"]
+                {"_id": ObjectId(restaurant_id)}
+            )
         else:
-            restaurant = ""
+            restaurant = {
+                "name": ""
+            }
         if request.method == "POST":
             name = request.form.get("name")
             restaurant_id = mongo.db.restaurants.find_one(
                 {"name": name},
                 {"_id": 1})["_id"]
-            review = {  # create review to add to the DB
-                "_id": ObjectId(),
-                "author": session["user"],
-                "description": request.form.get("description"),
-                "star_score": int(request.form.get("star_score"))
-            }
+            review["author"] = session["user"]
+            review["description"] = request.form.get("description")
+            review["star_score"] = int(request.form.get("star_score"))
             mongo.db.restaurants.update_one({  # add review to DB
                 "_id": ObjectId(restaurant_id)}, {
                     "$push": {
@@ -220,8 +224,9 @@ def add_review(restaurant_id):
         return render_template(
             "add_review.html",
             restaurants=restaurants,
-            chosen_restaurant=restaurant,
-            user=user
+            restaurant=restaurant,
+            user=user,
+            review=review
         )
 
 
@@ -340,7 +345,8 @@ def edit_review(review_id):
         "edit_review.html",
         review=review,
         restaurant=restaurant,
-        user=user
+        user=user,
+        restaurants=restaurants
     )
 
 

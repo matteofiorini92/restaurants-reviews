@@ -1,51 +1,12 @@
-{% extends "base.html" %}
-{% block content %}
-
+{% extends "review.html" %}
+{% block title %}
 <h3 class="grey-text text-darken-4 center-align">Add a new review</h3>
 
 <div class="row card-panel grey lighten-5">
     <form class="col s12" method="POST" action="{{ url_for('add_review') }}">
-        <!-- restaurants are passed by app.py from the restaurants existing (and approved) in the db -->
-        <div class="row">
-            <div class="input-field col s12">
-                <select id="name" name="name" class="validate" required>
-                    {% if chosen_restaurant == "" %}
-                    <option value="" disabled selected>Select Restaurant</option>
-                    {% for restaurant in restaurants %}
-                    <option value="{{ restaurant.name }}">{{ restaurant.name.capitalize() }}</option>
-                    {% endfor %}
-                    {% else %}
-                        <option value="" disabled>Select Restaurant</option>
-                        {% for restaurant in restaurants %}
-                        {% if restaurant.name == chosen_restaurant %}
-                        <option value="{{ restaurant.name }}" selected>{{ restaurant.name.capitalize() }}</option>
-                        {% else %}
-                        <option value="{{ restaurant.name }}">{{ restaurant.name.capitalize() }}</option>
-                        {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </select>
-                <label for="name">Restaurant</label>
-            </div>
-        </div>
+{% endblock %}
 
-        <div class="row">
-            <div class="input-field col s12">
-                <textarea id="description" name="description" class="materialize-textarea"></textarea>
-                <label for="description">Your Review</label>
-            </div>
-        </div>
-
-
-        <div class="row center-align">
-            <div class="col s12 m6">
-                <input type="hidden" name="star_score" id="star_score" value="3">
-                <i id="star-1" class="fas fa-star fa-2x star-rating golden-star"></i>
-                <i id="star-2" class="fas fa-star fa-2x star-rating golden-star"></i>
-                <i id="star-3" class="fas fa-star fa-2x star-rating golden-star"></i>
-                <i id="star-4" class="fas fa-star fa-2x star-rating greyed-out"></i>
-                <i id="star-5" class="fas fa-star fa-2x star-rating greyed-out"></i>
-            </div>
+{% block buttons %}
             <div class="col s12 m6">
                 <button class="btn waves-effect waves-light red" type="cancel" name="add_review_cancel">Cancel
                     <i class="fas fa-times"></i>
@@ -54,9 +15,4 @@
                         class="fas fa-check"></i>
                 </button>
             </div>
-        </div>
-
-    </form>
-</div>
-
 {% endblock %}
