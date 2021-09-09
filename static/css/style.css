@@ -33,6 +33,10 @@
   background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
+.orange-transparent {
+  background-color: rgba(221, 44, 0, 0.8) !important;
+}
+
 .input-field>label {
   color: #000000;
 }
@@ -64,4 +68,9 @@
 
 .white-link {
   color: white;
+}
+
+.title {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

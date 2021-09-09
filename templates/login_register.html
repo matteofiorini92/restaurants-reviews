@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<h3 class="grey-text text-darken-4 center-align">Log-in / Register</h3>
+<div class="col s12 z-depth-3 orange-transparent">
+    <h3 class="white-text center-align title">Log-in / Register</h3>
+</div>
 
 <div class="row">
     <!-- log-in column -->
     <div class="col s12 m6 center-align">
-        <h5>Log-in</h5>
         <form class="col s12 card-panel grey lighten-5" method="POST" action="{{ url_for('login_register') }}">
+            <h5>Log-in</h5>
             <!-- https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page -->
             <input type="hidden" name="action" value="log_in">
             <div class="row">
@@ -33,8 +35,8 @@
     </div>
     <!-- register column-->
     <div class="col s12 m6 center-align">
-        <h5>Register</h5>
         <form class="col s12 card-panel grey lighten-5" method="POST" action="{{ url_for('login_register') }}">
+            <h5>Register</h5>
             <!-- https://stackoverflow.com/questions/14071250/how-to-place-two-forms-on-the-same-page -->
             <input type="hidden" name="action" value="register">
             <div class="row">

@@ -1,6 +1,8 @@
 {% extends "review.html" %}
 {% block title %}
-<h3 class="grey-text text-darken-4 center-align">Add a new review</h3>
+<div class="col s12 z-depth-3 orange-transparent">
+    <h3 class="white-text center-align title">Add a new review</h3>
+</div>
 
 <div class="row card-panel grey lighten-5">
     <form class="col s12" method="POST" action="{{ url_for('add_review') }}">
