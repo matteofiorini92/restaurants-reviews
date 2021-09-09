@@ -1,3 +1,12 @@
+<!-- 
+    This page is used to edit an existing restaurant.
+    It extends the restaurant.html template, which itself extends the base.html template
+
+    base template:              basic elements of the page (e.g. navbar)
+    restaurant template:        main body of the page, form and fields to add or edit a restaurant
+    edit_restaurant template:   title and buttons specific to editing an existing restaurants
+-->
+
 {% extends "restaurant.html" %}
 {% block title %}
 <div class="col s12 z-depth-3 orange-transparent">
@@ -19,7 +28,6 @@
                     </button>
                 </div>
             </div>
-
     </form>
 </div>
 {% endblock %}

@@ -1,6 +1,17 @@
+<!-- 
+    This page is used to view all approved restaurants
+    It extends the restaurants_list.html template, which itself extends the base.html template
+
+    base template:              basic elements of the page (e.g. navbar)
+    restaurants_list template:  main body of the page, with standard restaurant tiles
+    get_restaurants template:   title and buttons specific to the get_restaurants page (e.g. read some reviews)
+-->
+
 {% extends "restaurants_list.html" %}
 
 {% block searchbar %}
+
+<!-- search bar -->
 <div class="row card red lighten-5">
     <form action="{{ url_for('search') }}" method="POST" class="col s12">
         <div class="row valign-wrapper center-align">
@@ -29,11 +40,13 @@
 {% endblock %}
 
 {% block review1 %}
+<!-- read reviews button - available to everyone -->
 <a class="waves-effect waves-light btn activator">Read some reviews</a>
 {% endblock %}
 
 {% block buttons %}
     {% if user.role == "admin" %}
+    <!-- edit and delete buttons (for restaurant) - only available to admin users -->
     <a href="{{ url_for('edit_restaurant', restaurant_id=restaurant._id) }}"
         class="btn light-blue lighten-1">Edit</a>
     <!-- Modal Trigger -->
@@ -61,6 +74,7 @@
             class="fas fa-times close-reveal"></i></span>
     {% if restaurant.reviews %}
     {% for review in restaurant.reviews %}
+    <!-- list all reviews of this specific restaurant -->
     <p>{{ review.description }}</p>
     <p>{{ review.author }}</p>
     {% for i in range(1, review.star_score|int + 1 ) %}
@@ -69,9 +83,11 @@
     {% if user.role == "admin"  %}
     <span class="float-right">
         {% if user.username == review.author %}
+        <!-- only the review author can edit a review -->
         <a class="waves-effect waves-light btn-small modal-trigger orange"
             href="{{ url_for('edit_review', review_id=review._id) }}">Edit</a>
         {% endif %}
+        <!-- only the review author or an admin user can delete a review -->
         <!-- Modal Trigger -->
         <a class="waves-effect waves-light btn-small modal-trigger red"
             href="#delete_modal_{{ review._id }}">Delete</a>
