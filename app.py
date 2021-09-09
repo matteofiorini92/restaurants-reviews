@@ -128,7 +128,6 @@ def login_register():
                 mongo.db.users.insert_one(register)
             # put the new user into 'session' cookie
             session["user"] = request.form.get("username").lower()
-            flash("Registration Successful!")
             return redirect(url_for("get_restaurants",
                                     username=session["user"]))
         else:  # type is log_in
@@ -142,7 +141,6 @@ def login_register():
                     request.form.get("password")
                 ):
                     session["user"] = request.form.get("username").lower()
-                    flash("Welcome, {}".format(request.form.get("username")))
                     return redirect(url_for("get_restaurants",
                                             username=session["user"]))
                 else:
