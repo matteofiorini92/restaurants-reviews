@@ -27,8 +27,8 @@
                         <p> {{ restaurant.address_street }}</p>
                         <p>{{ restaurant.address_city }}</p>
                         <p>Co. {{ restaurant.address_county|capitalize }}</p>
-                        <p><i class="fas fa-phone-alt"></i> {{ restaurant.tel }}</p>
-                        <p><i class="fas fa-at"></i> {{ restaurant.email_address }}</p>
+                        <p><i class="fas fa-phone-alt"></i> <a href="tel:{{ restaurant.tel }}" class="blue-link">{{ restaurant.tel }}</a></p>
+                        <p><i class="fas fa-at"></i> <a href="mailto:{{ restaurant.email_address }}" class="blue-link">{{ restaurant.email_address }}</a></p>
                     </div>
                     <div class="col s12 m2">
                         <!-- placeholder for vegan and gluten free icons-->
