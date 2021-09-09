@@ -6,7 +6,7 @@
 .background {
   width: 100%;
   min-height: 100vh;
-  background-image: url("/static/css/img/table.jpg");
+  background-image: url("/static/img/table.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
