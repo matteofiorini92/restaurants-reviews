@@ -10,8 +10,9 @@
                 <div class="row">
                     <div class="col s12 m12">
                         <h5> {{ review.review.description }}</h5>
-                        <p>{{ review.review.star_score }}</p>
-                        <p>{{ review.review.author }}</p>
+                        {% for i in range(1, review.review.star_score|int + 1 ) %}
+                        <i class="fas fa-star golden-star"></i>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
