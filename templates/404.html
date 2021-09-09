@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Oops! Looks like this page doesn't exist</h2>
-<p><a href="{{ url_for('get_restaurants') }}" class="white-link"><strong>Click Here</strong></a> to go to the Home Page</p>
+<div class="card-panel white-transparent">
+    <h2>Oops! Looks like this page doesn't exist</h2>
+    <p><a href="{{ url_for('get_restaurants') }}" class="orange-link"><strong>Click Here</strong></a> to go to the Home
+        Page</p>
+</div>
 {% endblock %}
