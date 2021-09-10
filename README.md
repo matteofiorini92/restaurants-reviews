@@ -64,13 +64,16 @@ An admin user will also have access to:
 
 ### Wireframes
 
-- [Restaurants Wireframe](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/Restaurants.png)
-
+- [Add Restaurant](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/add_restaurants.png)
+- [Add Review](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/add_review.png)
+- [Approve Restaurants](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/approve_restaurants.png)
+- [Edit Review](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/edit_review.png)
+- [My Reviews](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/my_reviews.png)
+- [Restaurants](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/restaurants.png)
 
 ### The Surface Plane
 
-The color palette of the website will be white - light blue - blue
-The font will be Ubuntu.
+The color palette of the website will be white - dark orange - teal
 
 ## Features
 
@@ -79,27 +82,34 @@ The font will be Ubuntu.
  
 ### Existing Features
 
-- Feature 1 - Choice of 4 topics
-- Feature 2 - 2 levels of difficulty
-- Feature 3 - Choice of number of quotes to guess
-
+- Feature 1 - Search restaurants by name and location
+- Feature 2 - Read reviews and access contact details of restaurants
+- Feature 3 - Request to add a new restaurant
+- Feature 4 - Edit an existing restaurant (admin only)
+- Feature 5 - Add a new review
+- Feature 6 - Edit an existing review
+- Feature 7 - Delete a restaurant (admin only)
+- Feature 8 - Delete a review
+- Feature 9 - Approve restaurants (admin only)
+- Feature 10 - Register, log-in, log-out
 
 ### Features Left to Implement
-- 2 Players mode (1v1)
+- Filter restaurants by "has_vegan_options" or "has_gluten_free_options"
 
 ## Technologies Used
 
 - [Balsamiq](https://balsamiq.com/) for the wireframes of this readme.md file
-- [Bootstrap](https://getbootstrap.com/) to use the grid system, pre-formatted buttons and the scoreboard table
-- [Google Fonts](https://fonts.google.com/) for fonts
-- [JQuery](https://code.jquery.com/)
-- [FreeLogoDesign](https://www.freelogodesign.org/) to design the logo
-- [Canva](https://www.canva.com/) to create the background image
-- [TinyPng](https://tinypng.com/) to reduce the size of the background
-- [Friends API](https://friends-quotes-api.herokuapp.com/)
-- [Lord Of The Rings API](https://the-one-api.dev/)
-- [Game of Thrones API](https://github.com/wsizoo/game-of-thrones-quotes)
-- [Breaking Bad API](https://breakingbadapi.com/)
+- [Materialize](https://materializecss.com/) to use the grid system, pre-formatted buttons, colors and panel cards
+- [Canva](https://www.canva.com/) to create the logo image
+- [JQuery](https://code.jquery.com/) to initiate some interactive elements of the materialize framework
+- [Jinja](jinja.palletsprojects.com) to re-use common elements of different pages with templates
+- [Flask](https://flask.palletsprojects.com/)
+Gitpod
+Github
+Heroku
+
+
+
 
 ## Testing
 
