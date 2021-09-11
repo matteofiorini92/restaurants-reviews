@@ -8,6 +8,11 @@
 -->
 
 {% extends "restaurants_list.html" %}
+{% block title %}
+<div class="col s12 z-depth-3 orange-transparent">
+    <h3 class="white-text center-align title">Approve restaurants</h3>
+</div>
+{% endblock%}
 
 {% block buttons %}
 <a href="{{ url_for('approve_restaurants', restaurant_id=restaurant._id) }}"

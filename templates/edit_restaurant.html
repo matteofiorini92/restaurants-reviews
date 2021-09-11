@@ -23,9 +23,23 @@
                     <button class="btn waves-effect waves-light red" type="cancel" name="edit_restaurant_cancel">Cancel
                         <i class="fas fa-times"></i>
                     </button>
-                    <button class="btn waves-effect waves-light" type="submit" name="edit_restaurant_submit">Edit
-                        <i class="fas fa-check"></i>
-                    </button>
+                    <a class="btn waves-effect waves-light modal-trigger" href="#edit_restaurant_modal">Edit <i
+                        class="fas fa-pencil-alt"></i>
+                </a>
+
+                <!-- Modal Structure -->
+                <div id="edit_restaurant_modal" class="modal">
+                    <div class="modal-content">
+                        <h4>Edit this restaurant?</h4>
+                        <p>Don't worry, you will still be able to edit this restaurant again later on.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn-small modal-close lighten-1 red">Cancel <i class="fas fa-times"></i></a>
+                        <button class="btn-small waves-effect waves-light" type="submit"
+                            name="edit_restaurant_submit">Edit <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </div>
+                </div>
                 </div>
             </div>
     </form>

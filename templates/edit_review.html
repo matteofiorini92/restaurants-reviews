@@ -17,15 +17,31 @@
 
 <div class="row card-panel white-transparent">
     <form class="col s12" method="POST" action="{{ url_for('edit_review', review_id=review._id) }}">
-{% endblock %}
+        {% endblock %}
 
 {% block buttons %}
-        <div class="col s12 m6">
-            <button class="btn waves-effect waves-light red" type="cancel" name="add_review_cancel">Cancel
-                <i class="fas fa-times"></i>
-            </button>
-            <button class="btn waves-effect waves-light" type="submit" name="add_review_submit">Edit
-                <i class="fas fa-check"></i>
+<div class="col s12 m6">
+    <button class="btn waves-effect waves-light red" type="cancel" name="add_review_cancel">Cancel
+        <i class="fas fa-times"></i>
+    </button>
+    <a class="btn waves-effect waves-light modal-trigger" href="#edit_review_modal">Edit <i
+            class="fas fa-pencil-alt"></i>
+    </a>
+
+    <!-- Modal Structure -->
+    <div id="edit_review_modal" class="modal">
+        <div class="modal-content">
+            <h4>Edit review?</h4>
+            <p>Don't worry, you will still be able to edit this review again later on.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn-small modal-close lighten-1 red">Cancel <i class="fas fa-times"></i></a>
+            <button class="btn-small waves-effect waves-light" type="submit" name="edit_review_submit">Edit <i
+                    class="fas fa-pencil-alt"></i>
             </button>
         </div>
+    </div>
+</div>
+
+
 {% endblock %}

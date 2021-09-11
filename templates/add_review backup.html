@@ -1,0 +1,29 @@
+<!-- 
+    This page is used to add a new review to a restaurant.
+    It extends the reivew.html template, which itself extends the base.html template
+
+    base template:          basic elements of the page (e.g. navbar)
+    review template:        main body of the page, form and fields to add or edit a review
+    add_review template:    title and buttons specific to adding a new review
+-->
+
+{% extends "review.html" %}
+{% block title %}
+<div class="col s12 z-depth-3 orange-transparent">
+    <h3 class="white-text center-align title">Add a new review</h3>
+</div>
+
+<div class="row card-panel grey lighten-5">
+    <form class="col s12" method="POST" action="{{ url_for('add_review') }}">
+{% endblock %}
+
+{% block buttons %}
+            <div class="col s12 m6">
+                <button class="btn waves-effect waves-light red" type="cancel" name="add_review_cancel">Cancel
+                    <i class="fas fa-times"></i>
+                </button>
+                <button class="btn waves-effect waves-light" type="submit" name="add_review_submit">Add<i
+                        class="fas fa-check"></i>
+                </button>
+            </div>
+{% endblock %}
