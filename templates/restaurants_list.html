@@ -23,15 +23,21 @@
                 <i class="fas fa-euro-sign"></i>
                 {% endfor %}
                 <div class="row">
-                    <div class="col s12 m10">
+                    <div class="col s8">
                         <p> {{ restaurant.address_street }}</p>
                         <p>{{ restaurant.address_city }}</p>
                         <p>Co. {{ restaurant.address_county|capitalize }}</p>
                         <p><i class="fas fa-phone-alt"></i> <a href="tel:{{ restaurant.tel }}" class="blue-link">{{ restaurant.tel }}</a></p>
                         <p><i class="fas fa-at"></i> <a href="mailto:{{ restaurant.email_address }}" class="blue-link">{{ restaurant.email_address }}</a></p>
                     </div>
-                    <div class="col s12 m2">
+                    <div class="col s4 align-right">
                         <!-- placeholder for vegan and gluten free icons-->
+                        {% if restaurant.has_vegan_options %}
+                        <img src="/static/img/vegan-friendly-medium.png" alt="vegan friendly">
+                        {% endif %}
+                        {% if restaurant.has_gluten_free_options %}
+                        <img src="/static/img/gluten-free-medium.png" alt="gluten-free">
+                        {% endif %}
                     </div>
                 </div>
                 {% block review1%}
