@@ -127,19 +127,19 @@ The final scoreboard is made with random scores, it doesn't give a realistic ide
 - User story 2: I want to challenge my friends on who knows a particular topic the best
 The scoring system allows multiple players to play one after the other, and see who knows a particular topic best by comparing the final points. This needs to be done by the players as the system doesn't record the scoring of previous games.
 
-The Google Chrome Lighthouse reports for Desktop and Mobile:
-- ![Desktop](https://raw.githubusercontent.com/matteofiorini92/QuotesQuiz/master/assets/img/lighthouse/lighthouse-desktop.png)
-- ![Mobile](https://raw.githubusercontent.com/matteofiorini92/QuotesQuiz/master/assets/img/lighthouse/lighthouse-mobile.png)
-
 
 I used the following validators to check my HTML, CSS and JavaScript code:
 
 [HTML Validator](https://validator.w3.org/)
-- [Home Page](https://validator.w3.org/nu/?doc=https%3A%2F%2Fmatteofiorini92.github.io%2FQuotesQuiz%2F)
+- [Restaurants](https://validator.w3.org/nu/?doc=http%3A%2F%2Frestaurants-reviews-mf.herokuapp.com%2Fget_restaurants)
+- [Login-Register](https://validator.w3.org/nu/?doc=http%3A%2F%2Frestaurants-reviews-mf.herokuapp.com%2Flogin_register)
+- [My Reviews](https://validator.w3.org/nu/?doc=http%3A%2F%2Frestaurants-reviews-mf.herokuapp.com%2Fmy_reviews)
+- [Add Review](https://validator.w3.org/nu/?doc=http%3A%2F%2Frestaurants-reviews-mf.herokuapp.com%2Fadd_review)
+- [Add Restaurant](https://validator.w3.org/nu/?doc=http%3A%2F%2Frestaurants-reviews-mf.herokuapp.com%2Fadd_restaurant)
+- [Approve Restaurants](https://validator.w3.org/nu/?doc=http%3A%2F%2Frestaurants-reviews-mf.herokuapp.com%2Fapprove_restaurants)
 
 [CSS Validator](https://jigsaw.w3.org/css-validator/)
 
-- [style.css file](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fmatteofiorini92.github.io%2FQuotesQuiz%2Fassets%2Fcss%2Fstyle.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
 <p>
     <a href="https://jigsaw.w3.org/css-validator/check/referer">
         <img style="border:0;width:88px;height:31px"
@@ -149,6 +149,7 @@ I used the following validators to check my HTML, CSS and JavaScript code:
 </p>
 
 [JS Validator](https://jshint.com/)
+[PEP8 Validator](http://pep8online.com/)
 
 ### Bugs
 

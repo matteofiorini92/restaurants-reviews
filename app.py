@@ -1,13 +1,12 @@
 import os
 import math
-from flask import Flask
-if os.path.exists("env.py"):
-    import env
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, flash, render_template, \
     redirect, request, session, url_for
-from werkzeug.security import generate_password_hash, check_password_hash
+if os.path.exists("env.py"):
+    import env
 
 app = Flask(__name__)
 
@@ -121,7 +120,8 @@ def login_register():
                     "password": generate_password_hash(
                         request.form.get("password")
                     ),
-                    "address_county": request.form.get("address_county").lower(),
+                    "address_county": request.form.get(
+                        "address_county").lower(),
                     "role": "user"
                 }
                 # user added to the DB
@@ -237,9 +237,12 @@ def logout():
     session.pop("user")
     return redirect(url_for('login_register'))
 
-@app.route("/approve_restaurants", defaults={'restaurant_id': None, 'status': None},
+
+@app.route("/approve_restaurants", defaults={
+    'restaurant_id': None, 'status': None},
            methods=["GET", "POST"])
-@app.route("/approve_restaurants/<restaurant_id>/<status>", methods=["GET", "POST"])
+@app.route("/approve_restaurants/<restaurant_id>/<status>", methods=[
+    "GET", "POST"])
 def approve_restaurants(restaurant_id, status):
     """
     This function is only available to admin users
@@ -256,7 +259,8 @@ def approve_restaurants(restaurant_id, status):
             # 403 = forbidden - triggered if the user is not an admin
             return render_template("403.html")
         else:
-            restaurants = list(mongo.db.restaurants.find({"status": "pending"}))
+            restaurants = list(
+                mongo.db.restaurants.find({"status": "pending"}))
             if restaurant_id:
                 if status == 'approved':
                     mongo.db.restaurants.update_one({
@@ -416,7 +420,7 @@ def delete_review(review_id):
     restaurant = mongo.db.restaurants.find_one(
         {"reviews._id": ObjectId(review_id)}
     )
-    """ https://stackoverflow.com/questions/15641492/mongodb-remove-object-from-array """
+    # https://stackoverflow.com/questions/15641492/mongodb-remove-object-from-array
     mongo.db.restaurants.update({
         "_id": restaurant["_id"]}, {
             "$pull": {
