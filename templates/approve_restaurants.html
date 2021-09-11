@@ -15,6 +15,11 @@
 {% endblock%}
 
 {% block buttons %}
-<a href="{{ url_for('approve_restaurants', restaurant_id=restaurant._id) }}"
-class="btn-small light-blue lighten-1" method="POST">Approve <i class="fas fa-check"></i></a>
+<!-- approve restaurant -->
+<a href="{{ url_for('approve_restaurants', restaurant_id=restaurant._id, status='rejected') }}"
+class="btn-small red btn-restaurant" method="POST">Reject <i class="fas fa-times"></i></a>
+
+<!-- reject restaurant -->
+<a href="{{ url_for('approve_restaurants', restaurant_id=restaurant._id, status='approved') }}"
+class="btn-small light-blue lighten-1 btn-restaurant" method="POST">Approve <i class="fas fa-check"></i></a>
 {% endblock %}
