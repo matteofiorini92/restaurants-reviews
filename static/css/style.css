@@ -130,6 +130,12 @@ footer h4 {
   margin-top: 5px;
 }
 
+.search-buttons {
+  position: relative;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .review-description {
   padding-top: 15px;
 }

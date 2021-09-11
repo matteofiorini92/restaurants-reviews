@@ -14,8 +14,8 @@
 <!-- search bar -->
 <div class="row card red lighten-5 search-container">
     <form action="{{ url_for('search') }}" method="POST" class="col s12">
-        <div class="row valign-wrapper center-align">
-            <div class="input-field col s12 m8">
+        <div class="row center-align">
+            <div class="input-field col s12 m4">
                 <input type="text" name="name" id="name" minlength="3" class="validate">
                 <label for="name">Search Restaurant</label>
             </div>
@@ -28,7 +28,7 @@
                 </select>
                 <label>County</label>
             </div>
-            <div class="col s12 m4">
+            <div class="search-buttons col s12 m4">
                 <a href="{{ url_for('get_restaurants') }}" class="red btn-small">Reset</a>
                 <button type="submit" class="light-blue darken-1 btn-small">
                     <i class="fas fa-search left"></i> Search
