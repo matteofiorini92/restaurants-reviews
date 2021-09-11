@@ -1,6 +1,6 @@
 # FoodReview
 
-![home page all screen sizes](https://raw.githubusercontent.com/matteofiorini92/QuotesQuiz/master/assets/img/wireframes/readme-different-viewports.png)
+![home page all screen sizes](https://raw.githubusercontent.com/matteofiorini92/FoodReview/master/static/img/wireframes/food-review-responsive.png)
 
 [Link to deployed website](https://restaurants-reviews-mf.herokuapp.com/)
 
@@ -103,13 +103,11 @@ The color palette of the website will be white - dark orange - teal
 - [Canva](https://www.canva.com/) to create the logo image
 - [JQuery](https://code.jquery.com/) to initiate some interactive elements of the materialize framework
 - [Jinja](jinja.palletsprojects.com) to re-use common elements of different pages with templates
-- [Flask](https://flask.palletsprojects.com/)
-Gitpod
-Github
-Heroku
-https://www.iconfinder.com/
-
-
+- [Flask](https://flask.palletsprojects.com/) to write the python part of the project
+- [Gitpod](https://gitpod.io/) to develop the project
+- [GitHub](https://github.com/) for version control
+- [Heroku](https://www.heroku.com) to deploy the project
+- [IconFinder](https://www.iconfinder.com/) for the vegan friendly and gluten free badges
 
 ## Testing
 
@@ -178,7 +176,7 @@ I used the following validators to check my HTML, CSS and JavaScript code:
 
 ## Deployment
 
-[Link to deployed website](https://matteofiorini92.github.io/QuotesQuiz/)
+[Link to deployed website](https://restaurants-reviews-mf.herokuapp.com/)
 
 This project was developed using GitPod, pushed to GitHub and deployed using GitHub Pages.
 

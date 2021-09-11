@@ -1,31 +1,7 @@
-#logo {
-    max-height: 56px;
-    vertical-align: bottom;
-}
-
-.background {
-  width: 100%;
-  min-height: 100vh;
-  background-image: url("/static/img/table.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  display: inline-block;
-}
+/*--------------------------------------------Colors*/
 
 .layer {
-  width: 100%;
-  min-height: 100vh;
   background-color: rgba(255, 0, 0, 0.2);
-  display: inline-block;
-}
-
-.container {
-  width: 90%
-}
-
-.restaurant-card {
-    min-height: 250px;
 }
 
 .white-transparent {
@@ -42,19 +18,6 @@
 
 .label-black-bigger {
   color: #000000;
-  font-size: .9rem;
-}
-
-.social-links {
-    float: right;
-}
-
-.close-reveal {
-    float: right;
-}
-
-.float-right {
-    float: right;
 }
 
 .golden-star {
@@ -77,25 +40,15 @@
   color: rgb(48, 0, 136);
 }
 
-.title {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.align-right {
-  text-align: right;
-}
-
 footer p, footer h4 {
   color: rgb(245, 245, 245);
 }
 
-footer {
-  font-size: 15px;
-}
+/*--------------------------------------------Margins - Paddings*/
 
-footer h4 {
-  font-size: 20px;
+.title {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .footer {
@@ -104,30 +57,6 @@ footer h4 {
 
 footer h4 {
   margin-bottom: 5px;
-}
-
-/*--------------------------------------------Footer - all pages*/
-
-.address, .contacts, .social {
-  padding: 20px 0px 0px 35px;
-}
-
-.contacts {
-  overflow-wrap: break-word;
-}
-
-.row {
-  margin-bottom: 0px;
-}
-
-.footer-social {
-  font-size: 25px;
-  padding-right: 10px;
-  padding-top: 10px;
-}
-
-.btn-restaurant {
-  margin-top: 5px;
 }
 
 .search-buttons {
@@ -147,4 +76,89 @@ footer h4 {
 .search-container {
   margin-bottom: 30px;
   margin-top: 30px;
+}
+
+.address, .contacts, .social {
+  padding: 20px 0px 0px 35px;
+}
+
+.row {
+  margin-bottom: 0px;
+}
+
+.footer-social {
+  font-size: 25px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.btn-restaurant {
+  margin-top: 5px;
+}
+
+/*--------------------------------------------Font*/
+
+.label-black-bigger {
+  font-size: .9rem;
+}
+
+footer {
+  font-size: 15px;
+}
+
+footer h4 {
+  font-size: 20px;
+}
+
+/*--------------------------------------------Align*/
+
+.align-right {
+  text-align: right;
+}
+
+#logo {
+  vertical-align: bottom;
+}
+
+.float-right {
+  float: right;
+}
+
+/*--------------------------------------------Sizes*/
+
+#logo {
+  max-height: 56px;
+}
+
+.container {
+  width: 90%
+}
+
+.restaurant-card {
+  min-height: 250px;
+}
+
+.layer {
+  width: 100%;
+  min-height: 100vh;
+  display: inline-block;
+}
+
+.background {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/*--------------------------------------------Other*/
+
+.contacts {
+  overflow-wrap: break-word;
+}
+
+.background {
+  background-image: url("/static/img/table.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: inline-block;
 }
