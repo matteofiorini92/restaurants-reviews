@@ -219,6 +219,7 @@ def add_review(restaurant_id):
                     }
                 }
             )
+            return redirect(url_for("add_review"))
         return render_template(
             "add_review.html",
             restaurants=restaurants,
@@ -283,7 +284,6 @@ def my_reviews():
         return render_template("401.html")
     else:
         user = mongo.db.users.find_one({"username": session["user"]})
-        print(user)
         restaurants = mongo.db.restaurants.find({
             "reviews.author": user["username"]
         })
@@ -311,6 +311,7 @@ def edit_review(review_id):
     show as written by the original user.
     """
     user = mongo.db.users.find_one({"username": session["user"]})
+    print(user)
     restaurants = mongo.db.restaurants.find(
         {"reviews._id": ObjectId(review_id)})
     for restaurant in restaurants:
@@ -339,7 +340,7 @@ def edit_review(review_id):
                 }
             }
         )
-        return render_template("my_reviews.html")
+        return redirect(url_for("my_reviews"))
     return render_template(
         "edit_review.html",
         review=review,

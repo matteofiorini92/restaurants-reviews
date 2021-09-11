@@ -26,7 +26,7 @@
 }
 
 .restaurant-card {
-    height: 300px;
+    min-height: 250px;
 }
 
 .white-transparent {
@@ -70,6 +70,10 @@
   color: rgb(221, 44, 0);
 }
 
+.white-link {
+  color: rgb(255, 255, 255);
+}
+
 .blue-link {
   color: rgb(48, 0, 136);
 }
@@ -81,4 +85,52 @@
 
 .align-right {
   text-align: right;
+}
+
+footer p, footer h4 {
+  color: rgb(245, 245, 245);
+}
+
+footer {
+  font-size: 15px;
+}
+
+footer h4 {
+  font-size: 20px;
+}
+
+.footer {
+  margin: 0;
+}
+
+footer h4 {
+  margin-bottom: 5px;
+}
+
+/*--------------------------------------------Footer - all pages*/
+
+.address, .contacts, .social {
+  padding: 20px 0px 0px 35px;
+}
+
+.contacts {
+  overflow-wrap: break-word;
+}
+
+.row {
+  margin-bottom: 0px;
+}
+
+.footer-social {
+  font-size: 25px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.btn-restaurant {
+  margin-top: 5px;
+}
+
+.review-description {
+  padding-top: 15px;
 }

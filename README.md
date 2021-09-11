@@ -107,7 +107,7 @@ The color palette of the website will be white - dark orange - teal
 Gitpod
 Github
 Heroku
-
+https://www.iconfinder.com/
 
 
 

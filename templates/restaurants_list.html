@@ -31,12 +31,11 @@
                         <p><i class="fas fa-at"></i> <a href="mailto:{{ restaurant.email_address }}" class="blue-link">{{ restaurant.email_address }}</a></p>
                     </div>
                     <div class="col s4 align-right">
-                        <!-- placeholder for vegan and gluten free icons-->
                         {% if restaurant.has_vegan_options %}
-                        <img src="/static/img/vegan-friendly-medium.png" alt="vegan friendly">
+                        <img src="/static/img/vegan-friendly.png" alt="vegan friendly">
                         {% endif %}
                         {% if restaurant.has_gluten_free_options %}
-                        <img src="/static/img/gluten-free-medium.png" alt="gluten-free">
+                        <img src="/static/img/gluten-free.png" alt="gluten-free">
                         {% endif %}
                     </div>
                 </div>
