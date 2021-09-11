@@ -488,7 +488,11 @@ def only_approved(all):
 
 @app.errorhandler(404)
 def not_found(e):
-    return render_template("404.html")
+    if session:
+        user = mongo.db.users.find_one({"username": session["user"]})
+    else:
+        user = [{"role": ""}, {"username": ""}]
+    return render_template("404.html", user=user)
 
 
 def calculate_average_star_score(id):
