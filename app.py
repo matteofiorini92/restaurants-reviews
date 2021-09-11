@@ -128,8 +128,7 @@ def login_register():
                 mongo.db.users.insert_one(register)
             # put the new user into 'session' cookie
             session["user"] = request.form.get("username").lower()
-            return redirect(url_for("get_restaurants",
-                                    username=session["user"]))
+            return redirect(url_for("get_restaurants"))
         else:  # type is log_in
             existing_user = mongo.db.users.find_one({
                 "username": request.form.get("username").lower()
@@ -141,8 +140,7 @@ def login_register():
                     request.form.get("password")
                 ):
                     session["user"] = request.form.get("username").lower()
-                    return redirect(url_for("get_restaurants",
-                                            username=session["user"]))
+                    return redirect(url_for("get_restaurants"))
                 else:
                     # invalid password match
                     flash("Incorrect Username and/or Password")

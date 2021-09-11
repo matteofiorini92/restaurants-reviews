@@ -14,16 +14,14 @@
     <h3 class="white-text center-align title">Add a new restaurant</h3>
 </div>
 
-<div class="row card-panel white-transparent">
+<div class="row card-panel white-transparent new-restaurant-container">
     <form class="col s12" method="POST" action="{{ url_for('add_restaurant') }}">
         {% endblock %}
 
         {% block buttons %}
         <div class="row">
             <div class="col s12 center-align">
-                <button class="btn waves-effect waves-light red" type="cancel" name="add_restaurant_cancel">Cancel
-                    <i class="fas fa-times"></i>
-                </button>
+                <a href="{{ url_for('add_restaurant') }}" class="btn waves-effect waves-light red">Cancel <i class="fas fa-times"></i></a>
                 <a class="btn waves-effect waves-light modal-trigger" href="#add_restaurant_modal">Request to add <i
                         class="fas fa-check"></i>
                 </a>

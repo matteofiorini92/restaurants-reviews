@@ -19,9 +19,7 @@
 
 {% block buttons %}
 <div class="col s12 m6">
-    <button class="btn waves-effect waves-light red" type="cancel" name="add_review_cancel">Cancel
-        <i class="fas fa-times"></i>
-    </button>
+    <a href="{{ url_for('add_review') }}" class="btn waves-effect waves-light red">Cancel <i class="fas fa-times"></i></a>
     <a class="btn waves-effect waves-light modal-trigger" href="#add_review_modal">Add <i
             class="fas fa-check"></i>
     </a>
