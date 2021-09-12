@@ -36,7 +36,7 @@ Restaurants will have all the relevant contact details, a pricing score (based o
 - User story 4: As a user, I want to be able to manage my previous reviews. This includes editing or deleting them.
 - User story 5: As an admin user, I want to have control over new restaurants that are added. Since restaurants' details are objective, they need to be reviewed and approved by me
 - User story 6: As an admin user, I want to be able to delete or edit restaurants once they've been approved. 
-- User story 7: As an admin user, I want to be bale to delete unfair or spam reviews. I don't want to be able to edit a review, as the review's author is the only one who should be allowed to edit it.
+- User story 7: As an admin user, I want to be able to delete unfair or spam reviews. I don't want to be able to edit a review, as the review's author is the only one who should be allowed to edit it.
 - User story 8: As a visitor, I want to be able to register on the website to add new restaurants and reviews
 - User story 9: As a user, I want to be able to log-in and log-out of the website
 
@@ -82,51 +82,68 @@ The color palette of the website will be white - dark orange - teal
  
 ### Existing Features
 
-- Feature 1 - Search restaurants by name and location
-- Feature 2 - Read reviews and access contact details of restaurants
-- Feature 3 - Request to add a new restaurant
-- Feature 4 - Edit an existing restaurant (admin only)
-- Feature 5 - Add a new review
-- Feature 6 - Edit an existing review
-- Feature 7 - Delete a restaurant (admin only)
-- Feature 8 - Delete a review
-- Feature 9 - Approve restaurants (admin only)
-- Feature 10 - Register, log-in, log-out
+- User story 1: As a visitor, I want to check a restaurant's reviews before deciding to book
+    - Feature 1 - Search restaurants by name and location
+    - Feature 2 - Read reviews and access contact details of restaurants
+- User story 2: As a user, I want to leave a review of a restaurant that's already present in the list, that I've recently eaten at
+    - Feature 3 - Add a new review
+- User story 3: As a user, I want to add a new restaurant to the list, so that myself and other users can leave our reviews
+    - Feature 4 - Request to add a new restaurant
+- User story 4: As a user, I want to be able to manage my previous reviews. This includes editing or deleting them.
+    - Feature 5 - Edit an existing review
+    - Feature 6 - Delete a review
+- User story 5: As an admin user, I want to have control over new restaurants that are added. Since restaurants' details are objective, they need to be reviewed and approved by me
+    - Feature 7 - Approve restaurants (admin only)
+- User story 6: As an admin user, I want to be able to delete or edit restaurants once they've been approved.
+    - Feature 8 - Edit an existing restaurant (admin only)
+    - Feature 9 - Delete a restaurant (admin only)
+- User story 7: As an admin user, I want to be able to delete unfair or spam reviews. I don't want to be able to edit a review, as the review's author is the only one who should be allowed to edit it.
+    - Feature 5 - Delete a review
+- User story 8: As a visitor, I want to be able to register on the website to add new restaurants and reviews
+- User story 9: As a user, I want to be able to log-in and log-out of the website
+    - Feature 10 - Register, log-in, log-out
 
 ### Features Left to Implement
 - Filter restaurants by "has_vegan_options" or "has_gluten_free_options"
 
 ## Technologies Used
 
-- [Balsamiq](https://balsamiq.com/) for the wireframes of this readme.md file
+### Languages and Frameworks
+
+- HTML for the basic structure of the website
+- CSS for some custom styling of the website
 - [Materialize](https://materializecss.com/) to use the grid system, pre-formatted buttons, colors and panel cards
-- [Canva](https://www.canva.com/) to create the logo image
 - [JQuery](https://code.jquery.com/) to initiate some interactive elements of the materialize framework
 - [Jinja](jinja.palletsprojects.com) to re-use common elements of different pages with templates
 - [Flask](https://flask.palletsprojects.com/) to write the python part of the project
+
+### Applications
+
+- [MongoDB](https://www.mongodb.com/) as DB to store all data used by the application
 - [Gitpod](https://gitpod.io/) to develop the project
 - [GitHub](https://github.com/) for version control
 - [Heroku](https://www.heroku.com) to deploy the project
+- [Balsamiq](https://balsamiq.com/) for the wireframes of this readme.md file
+- [Canva](https://www.canva.com/) to create the logo image
 - [IconFinder](https://www.iconfinder.com/) for the vegan friendly and gluten free badges
 
 ## Testing
 
-Usability and responsiveness were tested on the following browsers:
-- Google Chrome Version 90.0.4430.212 (Official Build) (x86_64)
-- Mozilla Firefox Version 72.0.2 (32-bit)
-- Safari Version 13.0.5 (15608.5.11)
+The application functionalities were tested in three different scenarios:
 
-All sections and divs adapted to the screen size as expected, all links worked fine and the navigation was flawless.
-Some styling gets lots using Firefox (e.g. the "how to play" bar) but the rest of the website worked without any issues.
+1. Visitor
+    - Able to view restaurants
+        - tested the search bar and it worked as expected when filtering by name, county and both
+        - all buttons (search, reset, read reviews) worked as expected
+    - Able to login or register
+    - Not able to perform any other action
+    - When trying to access a non-existing page, was prompted with the 404 template
+    - When trying to access an existing page that required to be logged-in, was prompted the 401 template
 
- 
-- User story 1: I want to prove to myself how well I know a specific subject (movies, books, etc.).
-The player is able to challenge themselves on a number of topics, choosing the difficulty and length of the challenge.
-The final scoreboard is made with random scores, it doesn't give a realistic idea of what the player's score is - a more accurate scoreboard with real previous scores will be implemented in the future.
+2. User
 
-- User story 2: I want to challenge my friends on who knows a particular topic the best
-The scoring system allows multiple players to play one after the other, and see who knows a particular topic best by comparing the final points. This needs to be done by the players as the system doesn't record the scoring of previous games.
 
+3. Admin
 
 I used the following validators to check my HTML, CSS and JavaScript code:
 
