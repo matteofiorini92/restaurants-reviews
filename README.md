@@ -1,6 +1,6 @@
 # FoodReview
 
-![home page all screen sizes](https://raw.githubusercontent.com/matteofiorini92/FoodReview/master/static/img/wireframes/food-review-responsive.png)
+![home page all screen sizes](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/food-review-responsive.png)
 
 [Link to deployed website](https://restaurants-reviews-mf.herokuapp.com/)
 
@@ -27,7 +27,7 @@ All visitors can read these reviews, but only members can add or edit new review
 
 ### User Stories
 
-The purpose of the website is for users to read about previous experiences other people had, at reastaurants they may want to go to.
+The purpose of the website is for users to read about previous experiences other people had, at restaurants they may want to go to.
 Restaurants will have all the relevant contact details, a pricing score (based on the price of an average meal), a star score (based on the average of their reviews) and badges if they are vegan-friendly and have gluten-free options.
 
 - User story 1: As a visitor, I want to check a restaurant's reviews before deciding to book
@@ -43,7 +43,7 @@ Restaurants will have all the relevant contact details, a pricing score (based o
 ### The Scope Plane
 
 Users want to be able to rate their experiences when eating out, to leave the reviews for other people to know how a particular restaurant was, what was their favourite dish, what they didn't enjoy.
-At the same time, people want to know what to expect when they go to a new place, they rely on other users experiences to know whether a place is nice or not, if a low-cost small diner has better food than a fancy restaurant.
+At the same time, people want to know what to expect when they go to a new place, they rely on other users' experiences to know whether a place is nice or not, if a low-cost small diner has better food than a fancy restaurant.
 
 ### The Structure Plane
 
@@ -64,7 +64,7 @@ An admin user will also have access to:
 
 ### Wireframes
 
-- [Add Restaurant](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/add_restaurants.png)
+- [Add Restaurant](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/add_restaurant.png)
 - [Add Review](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/add_review.png)
 - [Approve Restaurants](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/approve_restaurants.png)
 - [Edit Review](https://raw.githubusercontent.com/matteofiorini92/restaurants-reviews/master/static/img/wireframes/edit_review.png)
@@ -114,7 +114,7 @@ The color palette of the website will be white - dark orange - teal
 - CSS for some custom styling of the website
 - [Materialize](https://materializecss.com/) to use the grid system, pre-formatted buttons, colors and panel cards
 - [JQuery](https://code.jquery.com/) to initiate some interactive elements of the materialize framework
-- [Jinja](jinja.palletsprojects.com) to re-use common elements of different pages with templates
+- [Jinja](jinja.palletsprojects.com) to reuse common elements of different pages with templates
 - [Flask](https://flask.palletsprojects.com/) to write the python part of the project
 
 ### Applications
@@ -188,48 +188,33 @@ I used the following validators to check my HTML, CSS and JavaScript code:
 </p>
 
 [JS Validator](https://jshint.com/)
+
 [PEP8 Validator](http://pep8online.com/)
 
 ### Bugs
 
-- Issues with background image not responsive:
-    - tried using cover and contain based on the size of the viewport but that didn't work)
-    - fixed by setting the background-size property to 100% auto
-- Characters button text turning black once clicked:
-    - fixed by adding color: #FFF to the right-answer / wrong-answer classes
-- Fake results calculations giving unrealistic scores:
-    - fake results for made up players was calculating a random number between the lowest and highest achievable scores for that game
-    - this gives unrealistic results, for example a game of 1 round can only have a result of either 5 or -2, it can't give a result of 0
-    - changed logic so that for each fake character the system adds either 5 or -2 randomly, for the number of rounds of the game
-- 2 extra characters for "hard" version weren't hidden at the end of the gaem
-    - fixed this by adding the "hidden" class to the "hard" characters buttons
-- Names of the wrong characters were just checked against the right answer. This could give duplicates as there could be two wrong characters with the same name
-    - changed logic used to retrieve the wrong characters fake names, so that each new name was compared with the right name and existing wrong answers
-- Deployed website wasn't workin because GitHub pages only works with relative paths, not with absolute paths
-    - switch paths to relative
-- Click of Start Game button firing multiple times
-    - fixed by adding e.stopImmediatePropagation() to the event listener as suggested in [this](https://stackoverflow.com/a/24564826) StackOverflow thread.
-- When trying to clean up the code and merge duplicated code into functions, the processing of two topics (friends and got) stopped working as the structure of the response was different:
-    - fixed by adapting the structure of allAuthors to an array of objects for these two topics as well, so that the same function could be used to process allAuthors for all topics.
-- The friends API is slow to respond the first time: a loading icon should be added while waiting for the response.
-            
+- Email address wasn't pulling in edit_restaurant function: fixed by correcting the variable name used
+- Incorrect number of golden stars displayed in edit_review page: fixed by adjusting parameters in jinja for loop
+- my_reviews function not working correctly: was querying db with user[name] instead of user[username]
+- HTML validator raised error for a href tel attribute of restaurant_list page because phone numbers contained whitespaces: removed whitespaces with replace jinja method
+- Cancel buttons working as submitfix: found reason for that [here](https://stackoverflow.com/a/18407896/16735714) - was using type=cancel 
+- When logged as normal users, Edit and delete buttons weren't displayed in get_restaruants page for reviews written by that user: corrected logic in if statement
 
 ## Deployment
 
 [Link to deployed website](https://restaurants-reviews-mf.herokuapp.com/)
 
-This project was developed using GitPod, pushed to GitHub and deployed using GitHub Pages.
+This project was developed using GitPod, pushed to GitHub and deployed using Heroku.
 
-To deploy to GitHub Pages from its GitHub repository, the following steps were taken:
+To deploy to Heroku from the GitHub repository, the following steps were taken:
 
-1. Log into GitHub
-2. From the list of repositories on the screen, select **matteofiorini92/QuotesQuiz**
-3. From the menu items near the top of the page, select **Settings**
-4. Scroll down to the **GitHub Pages** section
-5. Under **Source** click the drop-down menu labelled **None** and select **master**
-6. In the **folder** drop-down, the **/root** folder is automatically selected
-7. Click on **Save**
-8. The project is now deployed and the URL of the website is available in the GitHub Pages section
+1. Go to heroku.com and log in
+2. Click on "Create new app"
+3. Go to Deploy > Deployment method > Github
+4. Go to Settings > Config vars and add variables
+8. Git add / commit / push Procfile and requirements.txt files
+9. Enable automatic deployments from Heroku
+10. Click on Deploy branch
 
 ### Hot to run this project locally
 
@@ -249,7 +234,7 @@ Then follow these steps:
 
 To work on the project code within a local IDE such as VSCode, Pycharm etc:
 
-1. Follow this link to the [GitHub repository](https://github.com/matteofiorini92/QuotesQuiz)
+1. Follow this link to the [GitHub repository](https://github.com/matteofiorini92/restaurants-reviews)
 2. Click on the Code button
 3. In the drop-down, copy the URL that you see in the HTTPs tab
 4. In your local IDE, open the terminal
@@ -258,11 +243,8 @@ To work on the project code within a local IDE such as VSCode, Pycharm etc:
 7. Press Enter. Your local clone will be created.
 
 ## Credits
+The content of the deployment section of this readme.md was mostly taken from (this webinar](https://www.youtube.com/watch?v=7BteidgLAyM).
 
-
-### Acknowledgements
-
-The content of the deployment section of this readme.md was mostly taken from [this webinar](https://www.youtube.com/watch?v=7BteidgLAyM).
-
-images
-https://unsplash.com/photos/N_Y88TWmGwA
+### Images
+- The [background image](https://unsplash.com/photos/N_Y88TWmGwA) was taken from [Unsplash](https://unsplash.com/).
+- The [gluten free](https://www.iconfinder.com/icons/4650676/bio_celiac_food_gluten_free_label_icon) and [vegan friendly](https://www.iconfinder.com/icons/4650689/cruelty_free_eco_no_meat_vegan_vegetarian_icon) badges were purchased on [IconFinder](https://www.iconfinder.com/)

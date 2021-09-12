@@ -358,6 +358,10 @@ def edit_review(review_id):
 
 @app.route("/edit_restaurant/<restaurant_id>", methods=["GET", "POST"])
 def edit_restaurant(restaurant_id):
+    """
+    Function to edit a restaurant.
+    Only available to admin users.
+    """
     if not session:
         # 401 = unauthorized - triggered if the user is not logged in
         return render_template("401.html")
@@ -408,12 +412,20 @@ def edit_restaurant(restaurant_id):
 
 @app.route("/delete_restaurant/<restaurant_id>")
 def delete_restaurant(restaurant_id):
+    """
+    Function to delete a restaurant.
+    Only available to admin users.
+    """
     mongo.db.restaurants.delete_one({"_id": ObjectId(restaurant_id)})
     return redirect(url_for("get_restaurants"))
 
 
 @app.route("/delete_review/<review_id>")
 def delete_review(review_id):
+    """
+    Function to delete a review.
+    Only available to admin users and to the review's author.
+    """
     restaurant = mongo.db.restaurants.find_one(
         {"reviews._id": ObjectId(review_id)}
     )
@@ -441,6 +453,10 @@ def delete_review(review_id):
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
+    """
+    Function to use the searchbar in homepage.
+    Restaurants can be filter by name, county or both
+    """
     if session:
         user = mongo.db.users.find_one({"username": session["user"]})
     else:
@@ -477,6 +493,9 @@ def search():
 
 
 def only_approved(all):
+    """
+    Get lists of approved restaurants
+    """
     restaurants = []
     for item in all:
         if item["status"] == "approved":
@@ -516,4 +535,4 @@ def calculate_average_star_score(id):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)
+            debug=False)
