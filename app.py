@@ -318,7 +318,6 @@ def edit_review(review_id):
     show as written by the original user.
     """
     user = mongo.db.users.find_one({"username": session["user"]})
-    print(user)
     restaurants = mongo.db.restaurants.find(
         {"reviews._id": ObjectId(review_id)})
     for restaurant in restaurants:

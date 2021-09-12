@@ -137,13 +137,35 @@ The application functionalities were tested in three different scenarios:
         - all buttons (search, reset, read reviews) worked as expected
     - Able to login or register
     - Not able to perform any other action
-    - When trying to access a non-existing page, was prompted with the 404 template
-    - When trying to access an existing page that required to be logged-in, was prompted the 401 template
+    - When trying to access a non-existing page, was prompted with the 404 template (with working link to home page)
+    - When trying to access an existing page that required to be logged-in, was prompted the 401 template (with working link to login page)
 
 2. User
-
+    - Able to view restaurants
+        - tested the search bar and it worked as expected when filtering by name, county and both
+        - all buttons (search, reset, read reviews, edit for own reviews) worked as expected
+    - Able to add reviews (tested submit and cancel buttons)
+    - Able to edit and delete own reviews (tested edit, delete and cancel buttons): note on editing reviews, user is only able to edit description and star scoring. If they want to edit the restaurant the review was for, this will need to be deleted and re-added.
+    - Adding, editing and deleting a review updates the relative restaurant's star scoring as expected
+    - Able to request to add a new restaurant
+    - Able to log out
+    - When trying to access a non-existing page, was prompted with the 404 template (with working link to home page)
+    - When trying to access an existing page that required to admin access, was prompted the 403 template (with working link to home page)
+    - Tested confirm and cancel buttons of all modals, working as expected
 
 3. Admin
+    - Able to view restaurants
+        - tested the search bar and it worked as expected when filtering by name, county and both
+        - all buttons (search, reset, read reviews, edit for own reviews) worked as expected
+    - Able to edit and delete restaurants (tested all submit and cancel buttons)
+    - Able to add reviews (tested submit and cancel buttons)
+    - Able to edit and delete own reviews (tested edit, delete and cancel buttons): note on editing reviews, user is only able to edit description and star scoring. If they want to edit the restaurant the review was for, this will need to be deleted and re-added.
+    - Adding, editing and deleting a review updates the relative restaurant's star scoring as expected
+    - Able to request to add a new restaurant
+    - Able to approve restaurants
+    - Able to log out
+    - When trying to access a non-existing page, was prompted with the 404 template (with working link to home page)
+    - Tested confirm and cancel buttons of all modals, working as expected
 
 I used the following validators to check my HTML, CSS and JavaScript code:
 
